@@ -3,6 +3,7 @@ package www.seotoolzz.com.dts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -22,23 +23,16 @@ public class ScanQRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_q_r);
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
-        mCodeScanner.setDecodeCallback(new DecodeCallback() {
-            @Override
-            public void onDecoded(@NonNull final Result result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(ScanQRActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-        scannerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCodeScanner.startPreview();
-            }
-        });
+        mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
+
+            // Redirect to new Activity with the data collected from QR.
+            Intent intent = new Intent(ScanQRActivity.this, DocumentViewActivity.class);
+            intent.putExtra("QR_DATA", result.getText());
+            startActivity(intent);
+
+        }));
+
+        scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
     }
 
     @Override

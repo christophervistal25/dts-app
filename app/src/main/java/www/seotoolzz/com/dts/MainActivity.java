@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity
 
     private int[] mTabsIcons = {
             R.drawable.ic_baseline_format_list_bulleted_24,
-            R.drawable.ic_baseline_send_24
+            R.drawable.ic_baseline_send_24,
+            R.drawable.ic_baseline_account_circle_24,
     };
 
     @Override
@@ -65,9 +66,9 @@ public class MainActivity extends AppCompatActivity
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        public final int PAGE_COUNT = 2;
+        public final int PAGE_COUNT = 3;
 
-        private final String[] mTabsTitle = {"Pending", "Messages"};
+        private final String[] mTabsTitle = {"List", "Send", "Profile"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity
 
                 case 1:
                     return HomeFragment.newInstance(2);
+
+                case 2:
+                    return ProfileFragment.newInstance(3);
             }
             return null;
         }
