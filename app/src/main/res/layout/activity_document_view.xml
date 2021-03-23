@@ -37,25 +37,37 @@
 
 
             <TextView
-                android:text="Liaison Name"
+                android:text="Purchase Request Date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
-                android:id="@+id/liaison_name"
+                android:id="@+id/prDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
 
             <TextView
-                android:text="Particulars"
+                android:text="Charge to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
-                android:id="@+id/particulars"
+                android:id="@+id/chargeTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:text="Current Department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/currentDepartment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
 
 
             <TextView
@@ -68,8 +80,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <TextView
+                android:text="Liaison Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/liaison_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <Button
                 android:id="@+id/btnSend"
+                android:background="@color/colorPrimaryDark"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:layout_marginTop="20dp"
+                android:textColor="#FFFFFF"
                 android:text="SEND DOCUMENT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
