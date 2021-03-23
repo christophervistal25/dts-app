@@ -1,5 +1,5 @@
 <resources>
-    <string name="base_url">http://192.168.2.107:8000/</string>
+    <string name="base_url">http://192.168.254.102:8000/</string>
     <string name="app_name">Document Tracking</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -11,6 +11,4 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="sign_out">SIGN OUT</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

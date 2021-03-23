@@ -17,6 +17,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.net.URISyntaxException;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
 import www.seotoolzz.com.dts.Fragments.HomeFragment;
 import www.seotoolzz.com.dts.Fragments.ListScanFragment;
 
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         askPermissionForCamera();
 
