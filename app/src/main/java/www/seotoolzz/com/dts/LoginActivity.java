@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                         && user.getUser_account_password().equals(userPassword.getText().toString())) {
                     // Set user logged in to true
                     SharedPref.setSharedPreferenceBoolean(getApplicationContext(), "IS_LOGGED_IN", true);
-
+                    SharedPref.setSharedPreferenceString(getApplicationContext(), "NAME", user.getUser_account_name());
                     // Redirect the user to main page.
                     redirectToMainActivity();
 
@@ -96,6 +96,8 @@ public class LoginActivity extends AppCompatActivity {
                             if(DB.getInstance(getApplicationContext()).userDao().create(account) != 0) {
 
                                 // Set user logged in to true
+                                SharedPref.setSharedPreferenceString(getApplicationContext(), "USERNAME", account.getUser_account_username());
+
                                 SharedPref.setSharedPreferenceBoolean(getApplicationContext(), "IS_LOGGED_IN", true);
 
                                 // Redirect the user to main page.

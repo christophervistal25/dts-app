@@ -18,9 +18,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import www.seotoolzz.com.dts.Database.DB;
+import www.seotoolzz.com.dts.Database.Models.Document;
 import www.seotoolzz.com.dts.Fragments.HomeFragment;
 import www.seotoolzz.com.dts.Fragments.ListScanFragment;
 
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        List<Document> documentList = DB.getInstance(this).documentDao().get();
 
         askPermissionForCamera();
 
@@ -71,9 +76,9 @@ public class MainActivity extends AppCompatActivity
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        public final int PAGE_COUNT = 3;
+        public final int PAGE_COUNT = 2;
 
-        private final String[] mTabsTitle = {"List", "Send", "Profile"};
+        private final String[] mTabsTitle = {"List", "Profile"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 
         public View getTabView(int position) {
             View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.toolbar, null);
-            ImageView icon = (ImageView) view.findViewById(R.id.icon);
+            ImageView icon = view.findViewById(R.id.icon);
             icon.setImageResource(mTabsIcons[position]);
             return view;
         }
@@ -91,13 +96,14 @@ public class MainActivity extends AppCompatActivity
             switch (pos) {
 
                 case 0:
-                    return ListScanFragment.newInstance(1);
-
-                case 1:
                     return HomeFragment.newInstance(2);
 
-                case 2:
+//                return ListScanFragment.newInstance(1);
+
+                case 1:
                     return ProfileFragment.newInstance(3);
+
+//                case 2:
             }
             return null;
         }

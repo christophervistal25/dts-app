@@ -34,6 +34,7 @@ public class ScanQRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_q_r);
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
+        mCodeScanner.setAutoFocusEnabled(true);
         mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
 
             // Redirect to new Activity with the data collected from QR.
