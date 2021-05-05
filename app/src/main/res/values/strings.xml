@@ -1,5 +1,5 @@
 <resources>
-    <string name="base_url">http://192.168.200.103:8000/</string>
+    <string name="base_url">http://192.168.1.15:8000/</string>
     <string name="app_name">Document Tracking</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>

@@ -1,56 +1,51 @@
 package www.seotoolzz.com.dts.Adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import www.seotoolzz.com.dts.Database.Models.Document;
+import www.seotoolzz.com.dts.Database.Models.Particular;
 import www.seotoolzz.com.dts.R;
 
-public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHolder> {
+public class ParticularAdapter  extends RecyclerView.Adapter<ParticularAdapter.ViewHolder> {
 
-    private List<Document> mData;
+    private List<Particular> mData;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private DocumentAdapter.ItemClickListener mClickListener;
     private Context context;
 
     // data is passed into the constructor
-    public DocumentAdapter(Context context, List<Document> data) {
+    public ParticularAdapter(Context context, List<Particular> data) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mData = data;
     }
 
-    // inflates the row layout from xml when needed
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.history_row, parent, false);
-        return new ViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
     }
 
-
-
-    // binds the data to the TextView in each row
-    @SuppressLint("DefaultLocale")
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Document document = mData.get(position);
-        holder.referenceNo.setText(String.format("Reference  : %s\nClaimant \t\t: %s\nPurpose \t\t: %s", document.getReference_no(), document.getLaimant(), document.getPurpose()));
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
     }
 
-    // total number of rows
     @Override
     public int getItemCount() {
         return mData.size();
     }
+
 
 
     // stores and recycles views as they are scrolled off screen
@@ -69,14 +64,15 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
         }
     }
 
-    // convenience method for getting data at click position
-    public Document getItem(int id) {
-        return mData.get(id);
-    }
 
     // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(DocumentAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
+    }
+
+    // convenience method for getting data at click position
+    public Particular getItem(int id) {
+        return mData.get(id);
     }
 
     // parent activity will implement this method to respond to click events

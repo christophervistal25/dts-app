@@ -90,15 +90,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+
+            <TextView
+                android:id="@+id/viewParticulars"
+                android:text="View Particulars"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
             <Button
                 android:id="@+id/btnSend"
+                android:layout_marginStart="15dp"
                 android:background="@color/colorPrimaryDark"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:layout_marginTop="20dp"
                 android:textColor="#FFFFFF"
                 android:text="SEND DOCUMENT"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                tools:ignore="UnusedAttribute" />
 
 
         </LinearLayout>

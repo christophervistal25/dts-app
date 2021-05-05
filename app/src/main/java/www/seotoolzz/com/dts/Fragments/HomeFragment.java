@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import www.seotoolzz.com.dts.Adapters.DocumentAdapter;
 import www.seotoolzz.com.dts.Database.DB;
+import www.seotoolzz.com.dts.Database.Models.Document;
 import www.seotoolzz.com.dts.R;
 
 
@@ -59,8 +60,6 @@ public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClick
         adapter.setClickListener(this);
         rvDocument.setAdapter(adapter);
         super.onViewCreated(view, savedInstanceState);
-
-
     }
 
     @Override
@@ -78,6 +77,7 @@ public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClick
 
     @Override
     public void onItemClick(View view, int position) {
-
+        Document document = adapter.getItem(position);
+        Toast.makeText(getContext(), String.valueOf(document.getReference_no()), Toast.LENGTH_SHORT).show();
     }
 }
