@@ -5,15 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import www.seotoolzz.com.dts.Contracts.IQRScanner;
@@ -24,6 +26,8 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
     private boolean hasManyQR = false;
     private boolean forClaim = false;
     List<String> bulkQrScanList = new ArrayList<>();
+    private final String GLUE = "<>";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +41,11 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
         mCodeScanner = new CodeScanner(this, scannerView);
         findViewById(R.id.btnOneQR).setOnClickListener(v -> {
             scannerViewLayout.setVisibility(View.VISIBLE);
-            hideButton(R.id.proceed);
-            hideButton(R.id.btnOneQR);
-            hideButton(R.id.btnManyQR);
-            hideButton(R.id.btnForClaim);
+            hideElement(R.id.proceed);
+            hideElement(R.id.btnOneQR);
+            hideElement(R.id.btnManyQR);
+            hideElement(R.id.btnForClaim);
+            hideElement(R.id.messageHelper);
             mCodeScanner.startPreview();
 
         });
@@ -48,10 +53,11 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
 
         findViewById(R.id.btnManyQR).setOnClickListener(v -> {
             scannerViewLayout.setVisibility(View.VISIBLE);
-            showButton(R.id.proceed);
-            hideButton(R.id.btnOneQR);
-            hideButton(R.id.btnManyQR);
-            hideButton(R.id.btnForClaim);
+            showElement(R.id.proceed);
+            hideElement(R.id.btnOneQR);
+            hideElement(R.id.btnManyQR);
+            hideElement(R.id.btnForClaim);
+            hideElement(R.id.messageHelper);
             mCodeScanner.startPreview();
             hasManyQR = true;
             forClaim = false;
@@ -59,19 +65,28 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
 
         findViewById(R.id.btnForClaim).setOnClickListener(v -> {
             scannerViewLayout.setVisibility(View.VISIBLE);
-            hideButton(R.id.proceed);
-            hideButton(R.id.btnOneQR);
-            hideButton(R.id.btnManyQR);
-            hideButton(R.id.btnForClaim);
+            hideElement(R.id.proceed);
+            hideElement(R.id.btnOneQR);
+            hideElement(R.id.btnManyQR);
+            hideElement(R.id.btnForClaim);
+            hideElement(R.id.messageHelper);
             mCodeScanner.startPreview();
             hasManyQR = false;
             forClaim = true;
         });
 
         findViewById(R.id.proceed).setOnClickListener(v -> {
-            for(String qr : bulkQrScanList) {
-                Log.d("SAMPLE_DATA", qr);
+            StringBuilder joinedData = new StringBuilder();
+
+            for(String dataInQr : bulkQrScanList) {
+                if(dataInQr.contains(",") || dataInQr.contains("|")) {
+                    joinedData.append(GLUE).append(dataInQr);
+                }
             }
+
+            Intent intent = new Intent(ScanQRActivity.this, DocumentViewActivity.class);
+            intent.putExtra("QR_DATA", joinedData.toString());
+            startActivity(intent);
         });
 
 
@@ -80,7 +95,21 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
         mCodeScanner.setAutoFocusEnabled(true);
         mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
             if(hasManyQR) {
-                bulkQrScanList.add(result.getText().toLowerCase());
+                if(!bulkQrScanList.contains(result.getText().toLowerCase())) {
+                    bulkQrScanList.add(result.getText().toLowerCase());
+
+                    // Add no. of scanned qr in button text.
+                    Button btnProceed = findViewById(R.id.proceed);
+                    btnProceed.setText(String.format("PROCEED WITH %d QR SCANNED", bulkQrScanList.size()));
+
+                    Alerter.create(this)
+                                .setTitle("QR Scanner")
+                                .setText("QR Successfully Scanned")
+                                .enableSwipeToDismiss()
+                                .show();
+                } else {
+                    Toast.makeText(this, "QR ALREADY SCANNED", Toast.LENGTH_SHORT).show();
+                }
                 mCodeScanner.startPreview();
             } else if(forClaim) {
                 Toast.makeText(this, "For Claim", Toast.LENGTH_SHORT).show();
@@ -122,27 +151,30 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
 
     @Override
     public void onBackPressed() {
-        hasManyQR = false;
-        forClaim = false;
+
         if(scannerViewLayout.getVisibility() != View.GONE) {
+            hasManyQR = false;
+            forClaim = false;
+            scannerViewLayout.animate().alpha(0.0f);
             scannerViewLayout.setVisibility(View.GONE);
-            showButton(R.id.btnOneQR);
-            showButton(R.id.btnManyQR);
-            showButton(R.id.btnForClaim);
+//            showElement(R.id.btnOneQR);
+            showElement(R.id.btnManyQR);
+            showElement(R.id.btnForClaim);
+            showElement(R.id.messageHelper);
         } else {
             super.onBackPressed();
         }
     }
 
     @Override
-    public void hideButton(int buttonId) {
+    public void hideElement(int buttonId) {
         if(findViewById(buttonId).getVisibility() == View.VISIBLE) {
             findViewById(buttonId).setVisibility(View.GONE);
         }
     }
 
     @Override
-    public void showButton(int buttonId) {
+    public void showElement(int buttonId) {
         if(findViewById(buttonId).getVisibility() == View.GONE) {
             findViewById(buttonId).setVisibility(View.VISIBLE);
         }

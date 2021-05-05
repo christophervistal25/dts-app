@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import www.seotoolzz.com.dts.Database.Models.Document;
 import www.seotoolzz.com.dts.Database.Models.Particular;
 import www.seotoolzz.com.dts.R;
 
@@ -20,7 +19,7 @@ public class ParticularAdapter  extends RecyclerView.Adapter<ParticularAdapter.V
 
     private List<Particular> mData;
     private LayoutInflater mInflater;
-    private DocumentAdapter.ItemClickListener mClickListener;
+    private ParticularAdapter.ItemClickListener mClickListener;
     private Context context;
 
     // data is passed into the constructor
@@ -33,12 +32,14 @@ public class ParticularAdapter  extends RecyclerView.Adapter<ParticularAdapter.V
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = mInflater.inflate(R.layout.particular_row, parent, false);
+        return new ParticularAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        Particular particular = mData.get(position);
+        holder.particularWidget.setText(String.format("%s\n%s\n%s", particular.getItem_id().replace("'", ""), particular.getName().replace("'", ""), particular.getCost().replace("'", "")));
     }
 
     @Override
@@ -50,11 +51,11 @@ public class ParticularAdapter  extends RecyclerView.Adapter<ParticularAdapter.V
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView referenceNo;
+        TextView particularWidget;
 
         ViewHolder(View itemView) {
             super(itemView);
-            referenceNo = itemView.findViewById(R.id.documentReference);
+            particularWidget = itemView.findViewById(R.id.particularWidget);
             itemView.setOnClickListener(this);
         }
 
@@ -66,7 +67,7 @@ public class ParticularAdapter  extends RecyclerView.Adapter<ParticularAdapter.V
 
 
     // allows clicks events to be caught
-    public void setClickListener(DocumentAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(ParticularAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

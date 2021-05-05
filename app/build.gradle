@@ -54,5 +54,8 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
 
+    implementation 'com.tapadoo.android:alerter:2.0.6'
+
+
 
 }

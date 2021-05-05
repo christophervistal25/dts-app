@@ -12,8 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Toast;
+
+import java.util.List;
 
 import www.seotoolzz.com.dts.Adapters.DocumentAdapter;
 import www.seotoolzz.com.dts.Database.DB;
@@ -48,7 +49,7 @@ public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_first, container, false);
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
         return view;
     }
 
@@ -56,9 +57,21 @@ public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClick
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         RecyclerView rvDocument = view.findViewById(R.id.rvDocument);
         rvDocument.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new DocumentAdapter(getActivity(), DB.getInstance(getContext()).documentDao().get());
-        adapter.setClickListener(this);
-        rvDocument.setAdapter(adapter);
+        List<Document> scannedDocuments = DB.getInstance(getContext()).documentDao().get();
+
+        /*
+        * Checking if there's scanned document.
+        * Display a message if no data
+        * */
+        if(scannedDocuments.size() == 0) {
+            view.findViewById(R.id.noScannedDocuments).setVisibility(View.VISIBLE);
+        } else {
+            view.findViewById(R.id.noScannedDocuments).setVisibility(View.GONE);
+            adapter = new DocumentAdapter(getActivity(), scannedDocuments);
+            adapter.setClickListener(this);
+            rvDocument.setAdapter(adapter);
+        }
+
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -78,6 +91,6 @@ public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClick
     @Override
     public void onItemClick(View view, int position) {
         Document document = adapter.getItem(position);
-        Toast.makeText(getContext(), String.valueOf(document.getReference_no()), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), String.valueOf(document.getReference_no()), Toast.LENGTH_SHORT).show();
     }
 }

@@ -60,6 +60,18 @@ public class DocumentViewActivity extends AppCompatActivity {
     int estimated_unit_cost  = 17;
     int estimated_total_cost  = 18;
 
+    //<>2021-05-10001-00001|2021-05-04|pgo|ervy m. isiang|1.00|for itu use|generalfund|pgso|1001|1|2021-05-04 14:59:22|1|
+    int QR_DATA_REFERENCE_NO = 0;
+    int QR_DATA_PURCHASE_REQUEST_DATE = 1;
+    int QR_DATA_CURRENT_DEPARTMENT = 2;
+    int QR_DATA_LIASON_NAME = 3;
+    int QR_DATA_= 4;
+    int QR_DATA_PURPOSE = 5;
+    int QR_DATA_OFFICE = 6;
+    int QR_DATA_OFFICE_2 = 7;
+
+
+
 
     List<String> splittedQRData;
     List<String> documentData;
@@ -92,9 +104,26 @@ public class DocumentViewActivity extends AppCompatActivity {
 
 
         String QR_DATA = getIntent().getStringExtra("QR_DATA");
+        QR_DATA = "<>2021-05-10001-00001|2021-05-04|pgo|ervy m. isiang|1.00|for itu use|generalfund|pgso|1001|1|2021-05-04 14:59:22|1|<>'1','1','1','1','1','1.00','1.00'|'1','2','2','2','2','2.00','2.00'|'1','3','3','3','3','3.00','3.00'|'1','4','4','4','4','4.00','4.00'|'1','5','5','5','5','5.00','5.00'|'1','6','6','6','6','6.00','6.00'|'1','7','7','7','7','7.00','7.00'|<>'1','98','98','98','98','98.00','98.00'|'1','99','99','99','99','99.00','99.00'|'1','100','100','100','100','100.00','100.00']<>'1','14','14','14','14','14.00','14.00'|'1','15','15','15','15','15.00','15.00'|'1','16','16','16','16','16.00','16.00'|'1','17','17','17','17','17.00','17.00'|'1','18','18','18','18','18.00','18.00'|'1','19','19','19','19','19.00','19.00'|";
+        String[] data = QR_DATA.split("<>");
+
+        // Document sample data.
+        //<>2021-05-10001-00001|2021-05-04|pgo|ervy m. isiang|1.00|for itu use|generalfund|pgso|1001|1|2021-05-04 14:59:22|1|
+        String documentData = this.getDocumentInformation(data);
+        String particularsData = this.getParticularsData(data);
+        String[] splintedDocumentData = documentData.split("\\|");
+        Log.d("SAMPLE_DATA", particularsData);
 
 
-          String sample_data = "'1','1','1','1','1','1.00','1.00'|'1','2','2','2','2','2.00','2.00'|'1','3','3','3','3','3.00','3.00'|'1','4','4','4','4','4.00','4.00'|'1','5','5','5','5','5.00','5.00'|'1','6','6','6','6','6.00','6.00'|'1','7','7','7','7','7.00','7.00'|";
+        referenceNo.setText(splintedDocumentData[QR_DATA_REFERENCE_NO]);
+        claimant.setText(splintedDocumentData[QR_DATA_LIASON_NAME].toUpperCase());
+        office.setText(splintedDocumentData[QR_DATA_OFFICE].toUpperCase());
+        purchaseDate.setText(splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE]);
+        chargeTo.setText(splintedDocumentData[QR_DATA_OFFICE_2].toUpperCase());
+        currentDepartment.setText(splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT].toUpperCase());
+
+
+
 //        String sample_data = "1","1","1","1","1","1.00","1.00"|"1","2","2","2","2","2.00","2.00"|"1","3","3","3","3","3.00","3.00"|"1","4","4","4","4","4.00","4.00"|"1","5","5","5","5","5.00","5.00"|"1","6","6","6","6","6.00","6.00"|"1","7","7","7","7","7.00","7.00"|
 //        String sample_data = "192.168.200.156/dts_admin_d70c9453e1f41d4624f2937b05819317/qrcodepage/@1$2021-03-00001$PGO.php|2021-03-00001|2021-03-22|PGO|JOEY GARCIA|1.00|FOR ITU USE|GENERALFUND|PGSO|1001|2|2021-03-22 11:22:23|1|['1'|'1'|'1'|'UNIT'|'LAPTOP ASUS'|'45000.00'|'45000.00'||'1'|'2'|'2'|'UNIT'|'LAPTOP ACER'|'55000.00'|'110000.00'||'1'|'3'|'3'|'UNIT'|'LAPTOP HP'|'35000.00'|'105000.00'||'1'|'4'|'4'|'UNIT'|'SAMSUNG A10'|'5000.00'|'20000.00'||'1'|'5'|'5'|'UNIT'|'CHERRY MOBILE S3'|'6000.00'|'30000.00']";
 //        documentData  = Arrays.asList(splittedQRData.get(0).split("\\|"));
@@ -104,7 +133,7 @@ public class DocumentViewActivity extends AppCompatActivity {
 //
         findViewById(R.id.viewParticulars).setOnClickListener(v -> {
             Intent intent = new Intent(DocumentViewActivity.this, ParticularsActivity.class);
-            intent.putExtra("PARTICULARS", QR_DATA);
+            intent.putExtra("PARTICULARS", particularsData);
             startActivity(intent);
         });
 
@@ -220,6 +249,37 @@ public class DocumentViewActivity extends AppCompatActivity {
 //        AlertDialog confirmationDialog = dialogBuilder.create();
 //
 //        findViewById(R.id.btnSend).setOnClickListener(v -> confirmationDialog.show());
+    }
+
+    private String getParticularsData(String[] data) {
+        String particulars = "";
+
+        for(String d: data) {
+            if(!d.contains("-")) {
+                particulars += d;
+            }
+        }
+
+        return particulars;
+    }
+
+    private String getDocumentInformation(String[] data) {
+        String documentData = "";
+        for(String d : data) {
+            char[] letters = d.toCharArray();
+            for(char letter : letters) {
+                // Checking each character of qr code if has letter or not
+                if((letter >= 65 && letter <= 90)) {
+                    documentData = d;
+                    break;
+                } else if( letter >= 97  && letter <= 122) {
+                    documentData = d;
+                    break;
+                }
+            }
+        }
+
+        return documentData;
     }
 
     private Emitter.Listener onSuccess = args -> runOnUiThread(() -> {

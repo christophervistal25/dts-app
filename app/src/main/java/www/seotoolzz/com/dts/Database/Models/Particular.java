@@ -3,13 +3,17 @@ package www.seotoolzz.com.dts.Database.Models;
 public class Particular {
     public String id;
 
+    public String item_id;
+
     public String name;
+
+    public String unit;
 
     public String description;
 
-    public double estimated_cost;
+    public String estimated_cost;
 
-    public double cost;
+    public String cost;
 
     public String getId() {
         return id;
@@ -35,19 +39,35 @@ public class Particular {
         this.description = description;
     }
 
-    public double getEstimated_cost() {
+    public String getEstimated_cost() {
         return estimated_cost;
     }
 
-    public void setEstimated_cost(double estimated_cost) {
+    public void setEstimated_cost(String estimated_cost) {
         this.estimated_cost = estimated_cost;
     }
 
-    public double getCost() {
+    public String getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(String cost) {
         this.cost = cost;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(String item_id) {
+        this.item_id = item_id;
     }
 }
