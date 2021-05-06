@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context="www.seotoolzz.com.dts.MainActivity">
 
+
+    <TextView
+        android:id="@+id/messageHelper"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="23sp"
+        android:letterSpacing="0.1"
+        android:textAllCaps="true"
+        android:text="Scanned Documents"
+        android:textColor="@color/darkColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
     <LinearLayout
         android:id="@+id/noScannedDocuments"
         android:visibility="gone"
@@ -37,9 +51,10 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/messageHelper"
         android:id="@+id/rvDocument"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:background="#FFFFFF"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

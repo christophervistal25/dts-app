@@ -43,7 +43,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Document document = mData.get(position);
-        holder.referenceNo.setText(String.format("Reference  : %s\nClaimant \t\t: %s\nPurpose \t\t: %s", document.getReference_no(), document.getLaimant(), document.getPurpose()));
+        holder.referenceNo.setText(String.format("Reference : %s\n\nClaimant    : %s\n\nPurpose     : %s", document.getReference_no().toUpperCase(), document.getLaimant().toUpperCase(), document.getPurpose().toUpperCase()));
     }
 
     // total number of rows

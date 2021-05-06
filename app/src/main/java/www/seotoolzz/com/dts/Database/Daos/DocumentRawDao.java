@@ -8,12 +8,13 @@ import androidx.room.Query;
 import java.util.List;
 
 import www.seotoolzz.com.dts.Database.Models.Document;
+import www.seotoolzz.com.dts.Database.Models.DocumentRaw;
 
 @Dao
-public interface DocumentDao {
+public interface DocumentRawDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long create(Document document);
+    long create(DocumentRaw document);
 
-    @Query("SELECT * FROM documents GROUP BY reference_no")
-    List<Document> get();
+    @Query("SELECT * FROM document_raw WHERE reference_no = :reference")
+    DocumentRaw find(String reference);
 }

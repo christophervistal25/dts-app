@@ -27,73 +27,135 @@
 
             <TextView
                 android:text="Reference No"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/referenceNo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
 
 
             <TextView
                 android:text="Purchase Request Date"
+                android:textColor="@color/darkColor"
+                android:textAllCaps="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
 
             <EditText
                 android:id="@+id/prDate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
 
             <TextView
-                android:text="Charge to"
+                android:text="charged to"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/chargeTo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
 
 
             <TextView
                 android:text="Current Department"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/currentDepartment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
 
 
 
             <TextView
                 android:text="Office"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/office"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
 
             <TextView
                 android:text="Liaison Name"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/liaison_name"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:text="amount"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+
+            <EditText
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:text="purpose"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <EditText
+                android:id="@+id/purpose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:text="current station"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/current_station"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
+
 
 
             <TextView
                 android:id="@+id/viewParticulars"
                 android:text="View Particulars"
+                android:textSize="17sp"
+                android:textAlignment="textEnd"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -102,8 +164,8 @@
             <Button
                 android:id="@+id/btnSend"
                 android:layout_marginStart="15dp"
-                android:background="@color/colorPrimaryDark"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:background="@drawable/btn_blue"
+                android:letterSpacing="0.1"
                 android:layout_marginTop="20dp"
                 android:textColor="#FFFFFF"
                 android:text="SEND DOCUMENT"

@@ -29,12 +29,10 @@ public class ParticularsActivity extends AppCompatActivity  implements Particula
         rvParticulars.setLayoutManager(new LinearLayoutManager(this));
 
         String particulars = getIntent().getStringExtra("PARTICULARS");
-        Toast.makeText(this, particulars, Toast.LENGTH_SHORT).show();
-        String sample = "'1','1','1','1','1','1.00','1.00'|'1','2','2','2','2','2.00','2.00'|'1','3','3','3','3','3.00','3.00'|'1','4','4','4','4','4.00','4.00'|'1','5','5','5','5','5.00','5.00'|'1','6','6','6','6','6.00','6.00'|'1','7','7','7','7','7.00','7.00'|";
 
         List<Particular> particularList = new ArrayList<>();
 
-        for(String data : sample.split("\\|")) {
+        for(String data : particulars.split("\\|")) {
             String[] splintedData = data.split(",");
             if(splintedData.length != 0) {
                 Particular particular = new Particular();

@@ -3,8 +3,11 @@ package www.seotoolzz.com.dts;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -14,11 +17,15 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.tapadoo.alerter.Alerter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import www.seotoolzz.com.dts.Contracts.IQRScanner;
+import www.seotoolzz.com.dts.Database.DB;
+import www.seotoolzz.com.dts.Database.Models.Document;
+import www.seotoolzz.com.dts.Database.Models.DocumentRaw;
 
 public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
     LinearLayout scannerViewLayout;
@@ -84,6 +91,16 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
                 }
             }
 
+            // Save RAW Data
+            String[] data = joinedData.toString().split("<>");
+            String documentData = this.getDocumentInformation(data);
+
+            DocumentRaw documentRaw = new DocumentRaw();
+            documentRaw.setReference_no(documentData.split("\\|")[0]);
+            documentRaw.setData(joinedData.toString());
+
+            DB.getInstance(getApplicationContext()).documentRawDao().create(documentRaw);
+
             Intent intent = new Intent(ScanQRActivity.this, DocumentViewActivity.class);
             intent.putExtra("QR_DATA", joinedData.toString());
             startActivity(intent);
@@ -112,7 +129,12 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
                 }
                 mCodeScanner.startPreview();
             } else if(forClaim) {
-                Toast.makeText(this, "For Claim", Toast.LENGTH_SHORT).show();
+                int REFERENCE_INDEX = 0;
+                int OFFICE_INDEX = 2;
+                String[] documentData = result.getText().toLowerCase().split("\\|");
+                String dynamicUrl = "$" + documentData[REFERENCE_INDEX] + "$" + documentData[OFFICE_INDEX].toUpperCase() + ".php";
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://192.168.1.11/dts_admin_d70c9453e1f41d4624f2937b05819317/qrcodepage/@" + dynamicUrl));
+                startActivity(browserIntent);
             } else {
                 Intent intent = new Intent(ScanQRActivity.this, DocumentViewActivity.class);
                 intent.putExtra("QR_DATA", result.getText());
@@ -122,13 +144,28 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
 //
     }
 
-//    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + data[0]));
-    //            startActivity(browserIntent);
-    // Redirect to new Activity with the data collected from QR.
-//    Intent intent = new Intent(ScanQRActivity.this, DocumentViewActivity.class);
-//            intent.putExtra("QR_DATA", result.getText());
-//    startActivity(intent);
-//            mSocket.emit("SEND_PR_DATA", result.getText());
+
+    private String getDocumentInformation(String[] data) {
+        String documentData = "";
+        for(String d : data) {
+            char[] letters = d.toCharArray();
+            for(char letter : letters) {
+                // Checking each character of qr code if has letter or not
+                if((letter >= 65 && letter <= 90)) {
+                    documentData = d;
+                    break;
+                } else if( letter >= 97  && letter <= 122) {
+                    documentData = d;
+                    break;
+                }
+            }
+        }
+
+        return documentData;
+    }
+
+
+
 
 
 

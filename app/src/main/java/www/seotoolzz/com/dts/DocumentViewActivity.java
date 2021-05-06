@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.slidingpanelayout.widget.SlidingPaneLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,12 +64,13 @@ public class DocumentViewActivity extends AppCompatActivity {
     //<>2021-05-10001-00001|2021-05-04|pgo|ervy m. isiang|1.00|for itu use|generalfund|pgso|1001|1|2021-05-04 14:59:22|1|
     int QR_DATA_REFERENCE_NO = 0;
     int QR_DATA_PURCHASE_REQUEST_DATE = 1;
-    int QR_DATA_CURRENT_DEPARTMENT = 2;
+    int QR_DATA_OFFICE = 2;
     int QR_DATA_LIASON_NAME = 3;
-    int QR_DATA_= 4;
+    int QR_DATA_AMOUNT = 4;
     int QR_DATA_PURPOSE = 5;
-    int QR_DATA_OFFICE = 6;
-    int QR_DATA_OFFICE_2 = 7;
+    int QR_DATA_CHARGED_TO = 6;
+    int QR_DATA_CURRENT_DEPARTMENT = 7;
+    int QR_DATA_CURRENT_STATION = 8;
 
 
 
@@ -101,10 +103,13 @@ public class DocumentViewActivity extends AppCompatActivity {
         EditText purchaseDate = findViewById(R.id.prDate);
         EditText chargeTo = findViewById(R.id.chargeTo);
         EditText currentDepartment = findViewById(R.id.currentDepartment);
+        EditText amount = findViewById(R.id.amount);
+        EditText purpose = findViewById(R.id.purpose);
+        EditText currentStation = findViewById(R.id.current_station);
 
 
         String QR_DATA = getIntent().getStringExtra("QR_DATA");
-        QR_DATA = "<>2021-05-10001-00001|2021-05-04|pgo|ervy m. isiang|1.00|for itu use|generalfund|pgso|1001|1|2021-05-04 14:59:22|1|<>'1','1','1','1','1','1.00','1.00'|'1','2','2','2','2','2.00','2.00'|'1','3','3','3','3','3.00','3.00'|'1','4','4','4','4','4.00','4.00'|'1','5','5','5','5','5.00','5.00'|'1','6','6','6','6','6.00','6.00'|'1','7','7','7','7','7.00','7.00'|<>'1','98','98','98','98','98.00','98.00'|'1','99','99','99','99','99.00','99.00'|'1','100','100','100','100','100.00','100.00']<>'1','14','14','14','14','14.00','14.00'|'1','15','15','15','15','15.00','15.00'|'1','16','16','16','16','16.00','16.00'|'1','17','17','17','17','17.00','17.00'|'1','18','18','18','18','18.00','18.00'|'1','19','19','19','19','19.00','19.00'|";
+//        QR_DATA = "<>2021-05-10001-00001|2021-05-04|pgo|ervy m. isiang|1.00|for itu use|generalfund|pgso|1001|1|2021-05-04 14:59:22|1|<>'1','1','1','1','1','1.00','1.00'|'1','2','2','2','2','2.00','2.00'|'1','3','3','3','3','3.00','3.00'|'1','4','4','4','4','4.00','4.00'|'1','5','5','5','5','5.00','5.00'|'1','6','6','6','6','6.00','6.00'|'1','7','7','7','7','7.00','7.00'|<>'1','98','98','98','98','98.00','98.00'|'1','99','99','99','99','99.00','99.00'|'1','100','100','100','100','100.00','100.00']<>'1','14','14','14','14','14.00','14.00'|'1','15','15','15','15','15.00','15.00'|'1','16','16','16','16','16.00','16.00'|'1','17','17','17','17','17.00','17.00'|'1','18','18','18','18','18.00','18.00'|'1','19','19','19','19','19.00','19.00'|";
         String[] data = QR_DATA.split("<>");
 
         // Document sample data.
@@ -112,15 +117,16 @@ public class DocumentViewActivity extends AppCompatActivity {
         String documentData = this.getDocumentInformation(data);
         String particularsData = this.getParticularsData(data);
         String[] splintedDocumentData = documentData.split("\\|");
-        Log.d("SAMPLE_DATA", particularsData);
-
 
         referenceNo.setText(splintedDocumentData[QR_DATA_REFERENCE_NO]);
         claimant.setText(splintedDocumentData[QR_DATA_LIASON_NAME].toUpperCase());
         office.setText(splintedDocumentData[QR_DATA_OFFICE].toUpperCase());
         purchaseDate.setText(splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE]);
-        chargeTo.setText(splintedDocumentData[QR_DATA_OFFICE_2].toUpperCase());
+        chargeTo.setText(splintedDocumentData[QR_DATA_CHARGED_TO].toUpperCase());
         currentDepartment.setText(splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT].toUpperCase());
+        amount.setText(splintedDocumentData[QR_DATA_AMOUNT]);
+        purpose.setText(splintedDocumentData[QR_DATA_PURPOSE].toUpperCase());
+        currentStation.setText(splintedDocumentData[QR_DATA_CURRENT_STATION].toUpperCase());
 
 
 
@@ -142,20 +148,19 @@ public class DocumentViewActivity extends AppCompatActivity {
 
 
         // Insert document to database.
-//        Document documentObject = new Document();
-//
-//        documentObject.setReference_no(documentData.get(transaction_no));
-//        documentObject.setPr_date(documentData.get(pr_date));
-//        documentObject.setOffice(documentData.get(current_department));
-//        documentObject.setLaimant(documentData.get(pr_liason));
-//        documentObject.setParticulars(Arrays.toString(particularsData.toArray()));
-//        documentObject.setAmount(documentData.get(particulars_total_amount));
-//        documentObject.setPurpose(documentData.get(pr_purpose));
-//        documentObject.setCharge_to(documentData.get(pr_charge_to));
-//        documentObject.setCurrent_department(documentData.get(pr_current_department));
-//        documentObject.setCurrent_station(documentData.get(pr_station));
-//
-//        DB.getInstance(this).documentDao().create(documentObject);
+        Document documentObject = new Document();
+        documentObject.setReference_no(splintedDocumentData[QR_DATA_REFERENCE_NO]);
+        documentObject.setPr_date(splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE]);
+        documentObject.setOffice(splintedDocumentData[QR_DATA_OFFICE]);
+        documentObject.setLaimant(splintedDocumentData[QR_DATA_LIASON_NAME]);
+        documentObject.setParticulars(particularsData);
+        documentObject.setAmount(splintedDocumentData[QR_DATA_AMOUNT]);
+        documentObject.setPurpose(splintedDocumentData[QR_DATA_PURPOSE]);
+        documentObject.setCharge_to(splintedDocumentData[QR_DATA_CHARGED_TO]);
+        documentObject.setCurrent_department(splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT]);
+        documentObject.setCurrent_station(splintedDocumentData[QR_DATA_CURRENT_STATION]);
+
+        DB.getInstance(this).documentDao().create(documentObject);
 //
 //        referenceNo.setText(documentData.get(transaction_no));
 //        claimant.setText(documentData.get(pr_liason));
@@ -237,18 +242,18 @@ public class DocumentViewActivity extends AppCompatActivity {
 //        mSocket.on("data_passed", onSuccess);
 //
 //
-//        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(DocumentViewActivity.this);
-//        dialogBuilder.setTitle("Important Message");
-//        dialogBuilder.setMessage("Please double check all the listed information before you submit this document.");
-//        dialogBuilder.setCancelable(true);
-//
-//        dialogBuilder.setPositiveButton("I already double check", (dialog, id) -> mSocket.emit("SEND_PR_DATA", document));
-//
-//        dialogBuilder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
-//
-//        AlertDialog confirmationDialog = dialogBuilder.create();
-//
-//        findViewById(R.id.btnSend).setOnClickListener(v -> confirmationDialog.show());
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(DocumentViewActivity.this);
+        dialogBuilder.setTitle("Important Message");
+        dialogBuilder.setMessage("Please double check all the listed information before you submit this document.");
+        dialogBuilder.setCancelable(true);
+
+        dialogBuilder.setPositiveButton("I already double check", (dialog, id) -> mSocket.emit("SEND_PR_DATA", ""));
+
+        dialogBuilder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+
+        AlertDialog confirmationDialog = dialogBuilder.create();
+
+        findViewById(R.id.btnSend).setOnClickListener(v -> confirmationDialog.show());
     }
 
     private String getParticularsData(String[] data) {

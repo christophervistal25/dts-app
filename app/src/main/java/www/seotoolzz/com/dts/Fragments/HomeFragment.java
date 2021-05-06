@@ -1,6 +1,7 @@
 package www.seotoolzz.com.dts.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,10 @@ import java.util.List;
 import www.seotoolzz.com.dts.Adapters.DocumentAdapter;
 import www.seotoolzz.com.dts.Database.DB;
 import www.seotoolzz.com.dts.Database.Models.Document;
+import www.seotoolzz.com.dts.Database.Models.DocumentRaw;
+import www.seotoolzz.com.dts.DocumentViewActivity;
 import www.seotoolzz.com.dts.R;
+import www.seotoolzz.com.dts.ScanQRActivity;
 
 
 public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClickListener  {
@@ -76,6 +80,28 @@ public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClick
     }
 
     @Override
+    public void onResume() {
+        RecyclerView rvDocument = getActivity().findViewById(R.id.rvDocument);
+        rvDocument.setLayoutManager(new LinearLayoutManager(getActivity()));
+        List<Document> scannedDocuments = DB.getInstance(getContext()).documentDao().get();
+
+        /*
+         * Checking if there's scanned document.
+         * Display a message if no data
+         * */
+        if(scannedDocuments.size() == 0) {
+            getActivity().findViewById(R.id.noScannedDocuments).setVisibility(View.VISIBLE);
+        } else {
+            getActivity().findViewById(R.id.noScannedDocuments).setVisibility(View.GONE);
+            adapter = new DocumentAdapter(getActivity(), scannedDocuments);
+            adapter.setClickListener(this);
+            rvDocument.setAdapter(adapter);
+        }
+
+        super.onResume();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
@@ -91,6 +117,9 @@ public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClick
     @Override
     public void onItemClick(View view, int position) {
         Document document = adapter.getItem(position);
-//        Toast.makeText(getContext(), String.valueOf(document.getReference_no()), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), DocumentViewActivity.class);
+        DocumentRaw documentRaw = DB.getInstance(getContext()).documentRawDao().find(document.getReference_no());
+        intent.putExtra("QR_DATA", documentRaw.getData());
+        startActivity(intent);
     }
 }

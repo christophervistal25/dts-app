@@ -39,7 +39,9 @@ public class ParticularAdapter  extends RecyclerView.Adapter<ParticularAdapter.V
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Particular particular = mData.get(position);
-        holder.particularWidget.setText(String.format("%s\n%s\n%s", particular.getItem_id().replace("'", ""), particular.getName().replace("'", ""), particular.getCost().replace("'", "")));
+        holder.itemName.setText(String.format("NAME:\t %s", particular.getName().replace("'", "")));
+        holder.itemDescription.setText(String.format("DESCRIPTION:\t%s", particular.getDescription().replace("'", "")));
+        holder.itemCost.setText(String.format("COST:\t %s", particular.getCost().replace("']'1", "").replace("'", "")));
     }
 
     @Override
@@ -51,11 +53,15 @@ public class ParticularAdapter  extends RecyclerView.Adapter<ParticularAdapter.V
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView particularWidget;
+        TextView itemName;
+        TextView itemDescription;
+        TextView itemCost;
 
         ViewHolder(View itemView) {
             super(itemView);
-            particularWidget = itemView.findViewById(R.id.particularWidget);
+            itemName = itemView.findViewById(R.id.itemName);
+            itemDescription = itemView.findViewById(R.id.itemDescription);
+            itemCost = itemView.findViewById(R.id.itemCost);
             itemView.setOnClickListener(this);
         }
 

@@ -6,13 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".ParticularsActivity">
 
+
+    <TextView
+        android:id="@+id/activityTitle"
+        android:text="Particulars"
+        android:textSize="23sp"
+        android:letterSpacing="0.1"
+        android:textAllCaps="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/darkColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvParticulars"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_below="@+id/activityTitle"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 
 
 </RelativeLayout>
