@@ -1,7 +1,6 @@
 package www.seotoolzz.com.dts.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,25 +9,22 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import www.seotoolzz.com.dts.Helpers.SharedPref;
-import www.seotoolzz.com.dts.LoginActivity;
 import www.seotoolzz.com.dts.R;
 
-public class ListScanFragment extends Fragment {
+public class UserSettingFragment extends Fragment {
 
     public static final String ARG_PAGE = "ARG_PAGE";
     public int mPageNo;
 
-    public ListScanFragment() {
+    public UserSettingFragment() {
     }
 
-    public static ListScanFragment newInstance(int pageNo) {
+    public static UserSettingFragment newInstance(int pageNo) {
 
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNo);
-        ListScanFragment fragment = new ListScanFragment();
+        UserSettingFragment fragment = new UserSettingFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,7 +39,7 @@ public class ListScanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false);
+        return inflater.inflate(R.layout.fragment_user_setting, container, false);
     }
 
     @Override

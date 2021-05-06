@@ -17,4 +17,7 @@ public interface DocumentRawDao {
 
     @Query("SELECT * FROM document_raw WHERE reference_no = :reference")
     DocumentRaw find(String reference);
+
+    @Query("SELECT * FROM document_raw")
+    List<DocumentRaw> all();
 }

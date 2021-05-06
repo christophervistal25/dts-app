@@ -17,9 +17,13 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.tapadoo.alerter.Alerter;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import www.seotoolzz.com.dts.Contracts.IQRScanner;
@@ -91,12 +95,15 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
                 }
             }
 
-            // Save RAW Data
-            String[] data = joinedData.toString().split("<>");
+            String QR_DATA = joinedData.toString();
+            String[] data = QR_DATA.split("<>");
+
             String documentData = this.getDocumentInformation(data);
 
+            String referenceNo = documentData.split("\\|")[0];
+
             DocumentRaw documentRaw = new DocumentRaw();
-            documentRaw.setReference_no(documentData.split("\\|")[0]);
+            documentRaw.setReference_no(referenceNo);
             documentRaw.setData(joinedData.toString());
 
             DB.getInstance(getApplicationContext()).documentRawDao().create(documentRaw);
@@ -147,6 +154,18 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
 //
     }
 
+
+    private String getParticularsData(String[] data) {
+        StringBuilder particulars = new StringBuilder();
+
+        for(String d: data) {
+            if(d.split("\\|").length <= 6) {
+                particulars.append(d);
+            }
+        }
+
+        return particulars.toString();
+    }
 
     private String getDocumentInformation(String[] data) {
         String documentData = "";

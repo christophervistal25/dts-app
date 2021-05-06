@@ -3,6 +3,8 @@ package www.seotoolzz.com.dts.Database.Models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.sql.Timestamp;
+
 @Entity(tableName ="document_raw")
 public class DocumentRaw {
     @PrimaryKey(autoGenerate = true)
@@ -33,4 +35,6 @@ public class DocumentRaw {
     public void setData(String data) {
         this.data = data;
     }
+
+
 }

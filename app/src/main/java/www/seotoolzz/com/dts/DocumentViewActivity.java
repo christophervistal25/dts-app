@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +45,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import www.seotoolzz.com.dts.Helpers.SharedPref;
+
 public class DocumentViewActivity extends AppCompatActivity {
     String socket_base_url = "http://192.168.200.175:3030/";
 
@@ -139,13 +142,29 @@ public class DocumentViewActivity extends AppCompatActivity {
         currentStation.setText(splintedDocumentData[QR_DATA_CURRENT_STATION].toUpperCase());
 
 
+        // Checking if there's a particular can't send document to API.
+        if(particularsData.isEmpty()) {
+            Alerter.create(this)
+                    .setTitle("Message")
+                    .setText("No available particulars please re-scan the document.")
+                    .enableSwipeToDismiss()
+                    .show();
+        }
 
+        // Can't view particular activity if there's no particular for the current scan document.
         findViewById(R.id.viewParticulars).setOnClickListener(v -> {
-            Intent intent = new Intent(DocumentViewActivity.this, ParticularsActivity.class);
-            intent.putExtra("PARTICULARS", particularsData);
-            startActivity(intent);
+            if(particularsData.isEmpty()) {
+                Alerter.create(this)
+                        .setTitle("Message")
+                        .setText("No available particulars please re-scan the document.")
+                        .enableSwipeToDismiss()
+                        .show();
+            } else {
+                Intent intent = new Intent(DocumentViewActivity.this, ParticularsActivity.class);
+                intent.putExtra("PARTICULARS", particularsData);
+                startActivity(intent);
+            }
         });
-
 
 
 
@@ -254,7 +273,7 @@ public class DocumentViewActivity extends AppCompatActivity {
 //        mSocket.emit("SEND_PR_DATA", "")
         dialogBuilder.setPositiveButton("I already double check", (dialog, id) -> {
 
-            Retrofit retrofit = RetrofitService.RetrofitInstance(getString(R.string.base_url));
+            Retrofit retrofit = RetrofitService.RetrofitInstance(SharedPref.getSharedPreferenceString(getApplicationContext(), "BASE_URL", getString(R.string.base_url)));
 
 
             IDocument documentService = retrofit.create(IDocument.class);
@@ -294,7 +313,7 @@ public class DocumentViewActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<UserLoginResponse> call, Throwable t) {
-                    if(t.getMessage().contains("was BOOLEAN")) {
+                    if(t.getMessage().toLowerCase().contains("end of input")) {
                         Toast toast = Toast.makeText(DocumentViewActivity.this, "Document successfully send", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
@@ -310,7 +329,19 @@ public class DocumentViewActivity extends AppCompatActivity {
 
         AlertDialog confirmationDialog = dialogBuilder.create();
 
-        findViewById(R.id.btnSend).setOnClickListener(v -> confirmationDialog.show());
+        findViewById(R.id.btnSend).setOnClickListener(v -> {
+
+            if(particularsData.isEmpty()) {
+                Alerter.create(this)
+                        .setTitle("Message")
+                        .setText("No available particulars please re-scan the document.")
+                        .enableSwipeToDismiss()
+                        .show();
+                return;
+            }
+
+            confirmationDialog.show();
+        });
     }
 
     private String getParticularsData(String[] data) {

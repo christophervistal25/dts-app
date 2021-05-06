@@ -15,17 +15,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
-import io.socket.client.IO;
-import io.socket.client.Socket;
 import www.seotoolzz.com.dts.Database.DB;
 import www.seotoolzz.com.dts.Database.Models.Document;
 import www.seotoolzz.com.dts.Fragments.HomeFragment;
-import www.seotoolzz.com.dts.Fragments.ListScanFragment;
+import www.seotoolzz.com.dts.Fragments.ProfileFragment;
 
 
 public class MainActivity extends AppCompatActivity
