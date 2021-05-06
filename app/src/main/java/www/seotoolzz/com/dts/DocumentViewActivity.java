@@ -10,9 +10,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,11 +29,21 @@ import java.util.List;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import www.seotoolzz.com.dts.API.ContractModels.UserLoginResponse;
+import www.seotoolzz.com.dts.API.Contracts.IDocument;
+import www.seotoolzz.com.dts.API.Contracts.User;
+import www.seotoolzz.com.dts.API.RetrofitService;
 import www.seotoolzz.com.dts.Adapters.DocumentAdapter;
 import www.seotoolzz.com.dts.Adapters.ParticularAdapter;
 import www.seotoolzz.com.dts.Database.DB;
 import www.seotoolzz.com.dts.Database.Models.Document;
-
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 public class DocumentViewActivity extends AppCompatActivity {
     String socket_base_url = "http://192.168.200.175:3030/";
 
@@ -109,11 +122,8 @@ public class DocumentViewActivity extends AppCompatActivity {
 
 
         String QR_DATA = getIntent().getStringExtra("QR_DATA");
-//        QR_DATA = "<>2021-05-10001-00001|2021-05-04|pgo|ervy m. isiang|1.00|for itu use|generalfund|pgso|1001|1|2021-05-04 14:59:22|1|<>'1','1','1','1','1','1.00','1.00'|'1','2','2','2','2','2.00','2.00'|'1','3','3','3','3','3.00','3.00'|'1','4','4','4','4','4.00','4.00'|'1','5','5','5','5','5.00','5.00'|'1','6','6','6','6','6.00','6.00'|'1','7','7','7','7','7.00','7.00'|<>'1','98','98','98','98','98.00','98.00'|'1','99','99','99','99','99.00','99.00'|'1','100','100','100','100','100.00','100.00']<>'1','14','14','14','14','14.00','14.00'|'1','15','15','15','15','15.00','15.00'|'1','16','16','16','16','16.00','16.00'|'1','17','17','17','17','17.00','17.00'|'1','18','18','18','18','18.00','18.00'|'1','19','19','19','19','19.00','19.00'|";
         String[] data = QR_DATA.split("<>");
 
-        // Document sample data.
-        //<>2021-05-10001-00001|2021-05-04|pgo|ervy m. isiang|1.00|for itu use|generalfund|pgso|1001|1|2021-05-04 14:59:22|1|
         String documentData = this.getDocumentInformation(data);
         String particularsData = this.getParticularsData(data);
         String[] splintedDocumentData = documentData.split("\\|");
@@ -130,13 +140,6 @@ public class DocumentViewActivity extends AppCompatActivity {
 
 
 
-//        String sample_data = "1","1","1","1","1","1.00","1.00"|"1","2","2","2","2","2.00","2.00"|"1","3","3","3","3","3.00","3.00"|"1","4","4","4","4","4.00","4.00"|"1","5","5","5","5","5.00","5.00"|"1","6","6","6","6","6.00","6.00"|"1","7","7","7","7","7.00","7.00"|
-//        String sample_data = "192.168.200.156/dts_admin_d70c9453e1f41d4624f2937b05819317/qrcodepage/@1$2021-03-00001$PGO.php|2021-03-00001|2021-03-22|PGO|JOEY GARCIA|1.00|FOR ITU USE|GENERALFUND|PGSO|1001|2|2021-03-22 11:22:23|1|['1'|'1'|'1'|'UNIT'|'LAPTOP ASUS'|'45000.00'|'45000.00'||'1'|'2'|'2'|'UNIT'|'LAPTOP ACER'|'55000.00'|'110000.00'||'1'|'3'|'3'|'UNIT'|'LAPTOP HP'|'35000.00'|'105000.00'||'1'|'4'|'4'|'UNIT'|'SAMSUNG A10'|'5000.00'|'20000.00'||'1'|'5'|'5'|'UNIT'|'CHERRY MOBILE S3'|'6000.00'|'30000.00']";
-//        documentData  = Arrays.asList(splittedQRData.get(0).split("\\|"));
-//
-//        particularsData = splittedQRData.get(1).split("\\|\\|");
-
-//
         findViewById(R.id.viewParticulars).setOnClickListener(v -> {
             Intent intent = new Intent(DocumentViewActivity.this, ParticularsActivity.class);
             intent.putExtra("PARTICULARS", particularsData);
@@ -144,23 +147,24 @@ public class DocumentViewActivity extends AppCompatActivity {
         });
 
 
-//        Toast.makeText(this, String.valueOf(particularsData).replace("]]", "") + "]", Toast.LENGTH_SHORT).show();
 
 
-        // Insert document to database.
-        Document documentObject = new Document();
-        documentObject.setReference_no(splintedDocumentData[QR_DATA_REFERENCE_NO]);
-        documentObject.setPr_date(splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE]);
-        documentObject.setOffice(splintedDocumentData[QR_DATA_OFFICE]);
-        documentObject.setLaimant(splintedDocumentData[QR_DATA_LIASON_NAME]);
-        documentObject.setParticulars(particularsData);
-        documentObject.setAmount(splintedDocumentData[QR_DATA_AMOUNT]);
-        documentObject.setPurpose(splintedDocumentData[QR_DATA_PURPOSE]);
-        documentObject.setCharge_to(splintedDocumentData[QR_DATA_CHARGED_TO]);
-        documentObject.setCurrent_department(splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT]);
-        documentObject.setCurrent_station(splintedDocumentData[QR_DATA_CURRENT_STATION]);
+        if(getIntent().getStringExtra("TYPE") == null || !getIntent().getStringExtra("TYPE").toUpperCase().equals("VIEW")) {
+            // Insert document to database.
+            Document documentObject = new Document();
+            documentObject.setReference_no(splintedDocumentData[QR_DATA_REFERENCE_NO]);
+            documentObject.setPr_date(splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE]);
+            documentObject.setOffice(splintedDocumentData[QR_DATA_OFFICE]);
+            documentObject.setLaimant(splintedDocumentData[QR_DATA_LIASON_NAME]);
+            documentObject.setParticulars(particularsData);
+            documentObject.setAmount(splintedDocumentData[QR_DATA_AMOUNT]);
+            documentObject.setPurpose(splintedDocumentData[QR_DATA_PURPOSE]);
+            documentObject.setCharge_to(splintedDocumentData[QR_DATA_CHARGED_TO]);
+            documentObject.setCurrent_department(splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT]);
+            documentObject.setCurrent_station(splintedDocumentData[QR_DATA_CURRENT_STATION]);
 
-        DB.getInstance(this).documentDao().create(documentObject);
+            DB.getInstance(this).documentDao().create(documentObject);
+        }
 //
 //        referenceNo.setText(documentData.get(transaction_no));
 //        claimant.setText(documentData.get(pr_liason));
@@ -247,7 +251,60 @@ public class DocumentViewActivity extends AppCompatActivity {
         dialogBuilder.setMessage("Please double check all the listed information before you submit this document.");
         dialogBuilder.setCancelable(true);
 
-        dialogBuilder.setPositiveButton("I already double check", (dialog, id) -> mSocket.emit("SEND_PR_DATA", ""));
+//        mSocket.emit("SEND_PR_DATA", "")
+        dialogBuilder.setPositiveButton("I already double check", (dialog, id) -> {
+
+            Retrofit retrofit = RetrofitService.RetrofitInstance(getString(R.string.base_url));
+
+
+            IDocument documentService = retrofit.create(IDocument.class);
+            Call<UserLoginResponse> documentResponseCall = documentService
+                                        .sendDocument(splintedDocumentData[QR_DATA_REFERENCE_NO],splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE],
+                                                splintedDocumentData[QR_DATA_OFFICE].toUpperCase(),splintedDocumentData[QR_DATA_LIASON_NAME].toUpperCase(),splintedDocumentData[QR_DATA_AMOUNT],
+                                                splintedDocumentData[QR_DATA_PURPOSE].toUpperCase(),splintedDocumentData[QR_DATA_CHARGED_TO].toUpperCase(),splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT].toUpperCase(),
+                                                splintedDocumentData[QR_DATA_CURRENT_STATION].toUpperCase()
+                                        );
+
+            documentResponseCall.enqueue(new Callback<UserLoginResponse>() {
+                @Override
+                public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {}
+
+                @Override
+                public void onFailure(Call<UserLoginResponse> call, Throwable t) {}
+            });
+
+
+            IDocument iDocument = retrofit.create(IDocument.class);
+            Call<UserLoginResponse> documentResponse = iDocument
+                    .sendHistoryOfDocument(
+                            splintedDocumentData[QR_DATA_REFERENCE_NO],
+                            splintedDocumentData[QR_DATA_OFFICE].toUpperCase(),
+                            "",
+                            splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE],
+                            splintedDocumentData[QR_DATA_LIASON_NAME].toUpperCase(),
+                            splintedDocumentData[QR_DATA_CURRENT_STATION].toUpperCase(),
+                            splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT].toUpperCase()
+                    );
+
+            documentResponse.enqueue(new Callback<UserLoginResponse>() {
+                @Override
+                public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<UserLoginResponse> call, Throwable t) {
+                    if(t.getMessage().contains("was BOOLEAN")) {
+                        Toast toast = Toast.makeText(DocumentViewActivity.this, "Document successfully send", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        finish();
+                    }
+                }
+            });
+
+
+        });
 
         dialogBuilder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 
@@ -257,31 +314,24 @@ public class DocumentViewActivity extends AppCompatActivity {
     }
 
     private String getParticularsData(String[] data) {
-        String particulars = "";
+        StringBuilder particulars = new StringBuilder();
 
         for(String d: data) {
-            if(!d.contains("-")) {
-                particulars += d;
+            if(d.split("\\|").length <= 6) {
+                particulars.append(d);
             }
         }
 
-        return particulars;
+        return particulars.toString();
     }
 
     private String getDocumentInformation(String[] data) {
         String documentData = "";
         for(String d : data) {
-            char[] letters = d.toCharArray();
-            for(char letter : letters) {
-                // Checking each character of qr code if has letter or not
-                if((letter >= 65 && letter <= 90)) {
-                    documentData = d;
-                    break;
-                } else if( letter >= 97  && letter <= 122) {
-                    documentData = d;
-                    break;
-                }
-            }
+          if(d.split("\\|").length >= 10) {
+              documentData = d;
+              break;
+          }
         }
 
         return documentData;

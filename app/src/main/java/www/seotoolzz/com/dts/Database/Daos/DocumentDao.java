@@ -14,6 +14,6 @@ public interface DocumentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long create(Document document);
 
-    @Query("SELECT * FROM documents GROUP BY reference_no")
+    @Query("SELECT * FROM documents ")
     List<Document> get();
 }

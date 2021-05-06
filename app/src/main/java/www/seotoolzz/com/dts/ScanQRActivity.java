@@ -112,12 +112,15 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
         mCodeScanner.setAutoFocusEnabled(true);
         mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
             if(hasManyQR) {
-                if(!bulkQrScanList.contains(result.getText().toLowerCase())) {
-                    bulkQrScanList.add(result.getText().toLowerCase());
+
+                String QR_DATA = result.getText().toLowerCase().replace("[", "").replace("]", "") + "|";
+
+                if(!bulkQrScanList.contains(QR_DATA)) {
+                    bulkQrScanList.add(QR_DATA);
 
                     // Add no. of scanned qr in button text.
                     Button btnProceed = findViewById(R.id.proceed);
-                    btnProceed.setText(String.format("PROCEED WITH %d QR SCANNED", bulkQrScanList.size()));
+                    btnProceed.setText(String.format(getString(R.string.btn_proceed_scan), bulkQrScanList.size()));
 
                     Alerter.create(this)
                                 .setTitle("QR Scanner")
@@ -148,19 +151,11 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
     private String getDocumentInformation(String[] data) {
         String documentData = "";
         for(String d : data) {
-            char[] letters = d.toCharArray();
-            for(char letter : letters) {
-                // Checking each character of qr code if has letter or not
-                if((letter >= 65 && letter <= 90)) {
-                    documentData = d;
-                    break;
-                } else if( letter >= 97  && letter <= 122) {
-                    documentData = d;
-                    break;
-                }
+            if(d.split("\\|").length >= 10) {
+                documentData = d;
+                break;
             }
         }
-
         return documentData;
     }
 

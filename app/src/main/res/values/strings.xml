@@ -1,5 +1,5 @@
 <resources>
-    <string name="base_url">http://192.168.1.15:8000/</string>
+    <string name="base_url">http://192.168.1.10:8000/</string>
     <string name="app_name">Document Tracking</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -15,4 +15,5 @@
     <string name="sign_in">SIGN IN</string>
     <string name="enter_your_password">••••••••••</string>
     <string name="login_welcome_text">Welcome</string>
+    <string name="btn_proceed_scan">PROCEED WITH %d QR SCANNED</string>
 </resources>

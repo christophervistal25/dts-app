@@ -40,8 +40,8 @@ public class ParticularAdapter  extends RecyclerView.Adapter<ParticularAdapter.V
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Particular particular = mData.get(position);
         holder.itemName.setText(String.format("NAME:\t %s", particular.getName().replace("'", "")));
-        holder.itemDescription.setText(String.format("DESCRIPTION:\t%s", particular.getDescription().replace("'", "")));
-        holder.itemCost.setText(String.format("COST:\t %s", particular.getCost().replace("']'1", "").replace("'", "")));
+        holder.itemDescription.setText(String.format("DESCRIPTION:\t%s", particular.getDescription().replace("'", "").toUpperCase()));
+        holder.itemCost.setText(String.format("COST:\t ₱%s", particular.getCost().replace("']'1", "").replace("'", "").replace("]", "")));
     }
 
     @Override
