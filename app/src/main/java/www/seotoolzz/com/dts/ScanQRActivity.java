@@ -3,11 +3,11 @@ package www.seotoolzz.com.dts;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -17,25 +17,18 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.tapadoo.alerter.Alerter;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import www.seotoolzz.com.dts.Contracts.IQRScanner;
 import www.seotoolzz.com.dts.Database.DB;
-import www.seotoolzz.com.dts.Database.Models.Document;
 import www.seotoolzz.com.dts.Database.Models.DocumentRaw;
+import www.seotoolzz.com.dts.Helpers.SharedPref;
 
 public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
     LinearLayout scannerViewLayout;
     private CodeScanner mCodeScanner;
     private boolean hasManyQR = false;
-    private boolean forClaim = false;
     List<String> bulkQrScanList = new ArrayList<>();
     private final String GLUE = "<>";
 
@@ -50,16 +43,6 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
 
 
         mCodeScanner = new CodeScanner(this, scannerView);
-        findViewById(R.id.btnOneQR).setOnClickListener(v -> {
-            scannerViewLayout.setVisibility(View.VISIBLE);
-            hideElement(R.id.proceed);
-            hideElement(R.id.btnOneQR);
-            hideElement(R.id.btnManyQR);
-            hideElement(R.id.btnForClaim);
-            hideElement(R.id.messageHelper);
-            mCodeScanner.startPreview();
-
-        });
 
 
         findViewById(R.id.btnManyQR).setOnClickListener(v -> {
@@ -71,7 +54,6 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
             hideElement(R.id.messageHelper);
             mCodeScanner.startPreview();
             hasManyQR = true;
-            forClaim = false;
         });
 
         findViewById(R.id.btnForClaim).setOnClickListener(v -> {
@@ -83,7 +65,6 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
             hideElement(R.id.messageHelper);
             mCodeScanner.startPreview();
             hasManyQR = false;
-            forClaim = true;
         });
 
         findViewById(R.id.proceed).setOnClickListener(v -> {
@@ -119,9 +100,15 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
         mCodeScanner.setAutoFocusEnabled(true);
         mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
             if(hasManyQR) {
+                if(!this.isDataValid(result.getText())) {
+                    Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(ScanQRActivity.this, "Please re-scan the QR", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    return;
+                }
 
                 String QR_DATA = result.getText().toLowerCase().replace("[", "").replace("]", "") + "|";
-
                 if(!bulkQrScanList.contains(QR_DATA)) {
                     bulkQrScanList.add(QR_DATA);
 
@@ -138,20 +125,20 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
                     Toast.makeText(this, "QR ALREADY SCANNED", Toast.LENGTH_SHORT).show();
                 }
                 mCodeScanner.startPreview();
-            } else if(forClaim) {
+            } else {
                 int REFERENCE_INDEX = 0;
                 int OFFICE_INDEX = 2;
                 String[] documentData = result.getText().toLowerCase().split("\\|");
                 String dynamicUrl = "$" + documentData[REFERENCE_INDEX] + "$" + documentData[OFFICE_INDEX].toUpperCase() + ".php";
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://192.168.1.11/dts_admin_d70c9453e1f41d4624f2937b05819317/qrcodepage/@" + dynamicUrl));
+                String base_url = SharedPref.getSharedPreferenceString(getApplicationContext(), "BASE_URL", getString(R.string.base_url));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(base_url + "dts_admin_d70c9453e1f41d4624f2937b05819317/qrcodepage/@" + dynamicUrl));
                 startActivity(browserIntent);
-            } else {
-                Intent intent = new Intent(ScanQRActivity.this, DocumentViewActivity.class);
-                intent.putExtra("QR_DATA", result.getText());
-                startActivity(intent);
             }
         }));
-//
+    }
+
+    private boolean isDataValid(String text) {
+        return text.length() >= 9;
     }
 
 
@@ -205,10 +192,7 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
 
         if(scannerViewLayout.getVisibility() != View.GONE) {
             hasManyQR = false;
-            forClaim = false;
-            scannerViewLayout.animate().alpha(0.0f);
             scannerViewLayout.setVisibility(View.GONE);
-//            showElement(R.id.btnOneQR);
             showElement(R.id.btnManyQR);
             showElement(R.id.btnForClaim);
             showElement(R.id.messageHelper);

@@ -87,7 +87,8 @@ public class DocumentViewActivity extends AppCompatActivity {
     int QR_DATA_CHARGED_TO = 6;
     int QR_DATA_CURRENT_DEPARTMENT = 7;
     int QR_DATA_CURRENT_STATION = 8;
-
+    int QR_DATA_USER_ID = 9;
+    int QR_DATA_DATE_TIME = 10;
 
 
 
@@ -273,6 +274,12 @@ public class DocumentViewActivity extends AppCompatActivity {
 //        mSocket.emit("SEND_PR_DATA", "")
         dialogBuilder.setPositiveButton("I already double check", (dialog, id) -> {
 
+//            Toast.makeText(this, particularsData, Toast.LENGTH_SHORT).show();
+              // build data for particulars.
+              String prepareDate = particularsData.replace("'", "");
+              String output = prepareDate.replace("|", ",|,");
+              String preparedData = "\"" + output.substring(0, output.length() - 1) + "\"";
+
             Retrofit retrofit = RetrofitService.RetrofitInstance(SharedPref.getSharedPreferenceString(getApplicationContext(), "BASE_URL", getString(R.string.base_url)));
 
 
@@ -281,7 +288,9 @@ public class DocumentViewActivity extends AppCompatActivity {
                                         .sendDocument(splintedDocumentData[QR_DATA_REFERENCE_NO],splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE],
                                                 splintedDocumentData[QR_DATA_OFFICE].toUpperCase(),splintedDocumentData[QR_DATA_LIASON_NAME].toUpperCase(),splintedDocumentData[QR_DATA_AMOUNT],
                                                 splintedDocumentData[QR_DATA_PURPOSE].toUpperCase(),splintedDocumentData[QR_DATA_CHARGED_TO].toUpperCase(),splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT].toUpperCase(),
-                                                splintedDocumentData[QR_DATA_CURRENT_STATION].toUpperCase()
+                                                splintedDocumentData[QR_DATA_CURRENT_STATION].toUpperCase(),
+                                                splintedDocumentData[QR_DATA_DATE_TIME],
+                                                splintedDocumentData[QR_DATA_USER_ID]
                                         );
 
             documentResponseCall.enqueue(new Callback<UserLoginResponse>() {
@@ -298,8 +307,8 @@ public class DocumentViewActivity extends AppCompatActivity {
                     .sendHistoryOfDocument(
                             splintedDocumentData[QR_DATA_REFERENCE_NO],
                             splintedDocumentData[QR_DATA_OFFICE].toUpperCase(),
-                            "",
-                            splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE],
+                            splintedDocumentData[QR_DATA_USER_ID],
+                            splintedDocumentData[QR_DATA_DATE_TIME],
                             splintedDocumentData[QR_DATA_LIASON_NAME].toUpperCase(),
                             splintedDocumentData[QR_DATA_CURRENT_STATION].toUpperCase(),
                             splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT].toUpperCase()
@@ -319,6 +328,26 @@ public class DocumentViewActivity extends AppCompatActivity {
                         toast.show();
                         finish();
                     }
+                }
+            });
+
+
+            IDocument iParticulars = retrofit.create(IDocument.class);
+            Call<UserLoginResponse> particularsCall = iParticulars
+                    .sendParticulars(
+                            splintedDocumentData[QR_DATA_REFERENCE_NO],
+                            preparedData
+                    );
+
+            particularsCall.enqueue(new Callback<UserLoginResponse>() {
+                @Override
+                public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<UserLoginResponse> call, Throwable t) {
+
                 }
             });
 

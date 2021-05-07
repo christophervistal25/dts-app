@@ -18,7 +18,9 @@ public interface IDocument {
                                          @Field("data_purpose") String data_purpose,
                                          @Field("data_charge_to") String data_charge_to,
                                          @Field("data_current_department") String data_current_department,
-                                         @Field("data_current_station") String data_current_station
+                                         @Field("data_current_station") String data_current_station,
+                                         @Field("history_logs_datetime") String history_logs_datetime,
+                                         @Field("history_logs_datetime") String history_logs_user_id
     );
 
     @FormUrlEncoded
@@ -30,6 +32,12 @@ public interface IDocument {
                                          @Field("history_logs_claimant") String history_logs_claimant,
                                          @Field("history_logs_current_station") String history_logs_current_station,
                                          @Field("history_logs_current_department") String history_logs_current_department
+    );
+
+    @FormUrlEncoded
+    @POST("/dts_admin_d70c9453e1f41d4624f2937b05819317/c79bdf421714f5087fc34b7c538b6807/transaction/added_btn_particulars.php")
+    Call<UserLoginResponse> sendParticulars(@Field("data_reference_no") String data_reference_no,
+                                                  @Field("particulars") String particulars
     );
 
 }
