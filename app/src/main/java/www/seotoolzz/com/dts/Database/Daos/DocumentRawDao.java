@@ -15,8 +15,8 @@ public interface DocumentRawDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long create(DocumentRaw document);
 
-    @Query("SELECT * FROM document_raw WHERE reference_no = :reference")
-    DocumentRaw find(String reference);
+    @Query("SELECT * FROM document_raw WHERE unique_id = :unique_id")
+    DocumentRaw find(String unique_id);
 
     @Query("SELECT * FROM document_raw")
     List<DocumentRaw> all();

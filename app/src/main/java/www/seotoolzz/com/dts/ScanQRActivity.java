@@ -19,6 +19,7 @@ import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import www.seotoolzz.com.dts.Contracts.IQRScanner;
 import www.seotoolzz.com.dts.Database.DB;
@@ -82,14 +83,17 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
             String documentData = this.getDocumentInformation(data);
 
             String referenceNo = documentData.split("\\|")[0];
+            String uniqueID = UUID.randomUUID().toString();
 
             DocumentRaw documentRaw = new DocumentRaw();
             documentRaw.setReference_no(referenceNo);
             documentRaw.setData(joinedData.toString());
+            documentRaw.setUnique_id(uniqueID);
 
             DB.getInstance(getApplicationContext()).documentRawDao().create(documentRaw);
 
             Intent intent = new Intent(ScanQRActivity.this, DocumentViewActivity.class);
+            intent.putExtra("UNIQUE_ID", uniqueID);
             intent.putExtra("QR_DATA", joinedData.toString());
             startActivity(intent);
         });

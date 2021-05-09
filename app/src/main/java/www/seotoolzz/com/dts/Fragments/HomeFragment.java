@@ -118,7 +118,7 @@ public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClick
     public void onItemClick(View view, int position) {
         Document document = adapter.getItem(position);
         Intent intent = new Intent(getActivity(), DocumentViewActivity.class);
-        DocumentRaw documentRaw = DB.getInstance(getContext()).documentRawDao().find(document.getReference_no());
+        DocumentRaw documentRaw = DB.getInstance(getContext()).documentRawDao().find(document.getUnique_id());
         intent.putExtra("QR_DATA", documentRaw.getData());
         intent.putExtra("TYPE", "VIEW");
         startActivity(intent);

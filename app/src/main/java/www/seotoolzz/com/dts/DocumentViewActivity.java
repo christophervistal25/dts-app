@@ -26,6 +26,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -171,6 +172,9 @@ public class DocumentViewActivity extends AppCompatActivity {
 
         if(getIntent().getStringExtra("TYPE") == null || !getIntent().getStringExtra("TYPE").toUpperCase().equals("VIEW")) {
             // Insert document to database.
+            String uniqueID = getIntent().getStringExtra("UNIQUE_ID");
+
+
             Document documentObject = new Document();
             documentObject.setReference_no(splintedDocumentData[QR_DATA_REFERENCE_NO]);
             documentObject.setPr_date(splintedDocumentData[QR_DATA_PURCHASE_REQUEST_DATE]);
@@ -182,6 +186,7 @@ public class DocumentViewActivity extends AppCompatActivity {
             documentObject.setCharge_to(splintedDocumentData[QR_DATA_CHARGED_TO]);
             documentObject.setCurrent_department(splintedDocumentData[QR_DATA_CURRENT_DEPARTMENT]);
             documentObject.setCurrent_station(splintedDocumentData[QR_DATA_CURRENT_STATION]);
+            documentObject.setUnique_id(uniqueID);
 
             DB.getInstance(this).documentDao().create(documentObject);
         }

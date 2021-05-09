@@ -23,6 +23,15 @@ public class Document {
     String description;
     String estimated_unit_cost;
     String estimated_total_cost;
+    String unique_id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUrl() {
         return url;
@@ -158,5 +167,13 @@ public class Document {
 
     public void setEstimated_total_cost(String estimated_total_cost) {
         this.estimated_total_cost = estimated_total_cost;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 }
