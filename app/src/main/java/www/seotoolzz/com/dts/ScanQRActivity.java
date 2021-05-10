@@ -1,17 +1,16 @@
 
 package www.seotoolzz.com.dts;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
@@ -109,26 +108,27 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
                     Toast toast = Toast.makeText(ScanQRActivity.this, "Please re-scan the QR", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
-                    return;
-                }
+                } else {
+                    String QR_DATA = result.getText().toLowerCase().replace("[", "").replace("]", "") + "|";
+                    if(!bulkQrScanList.contains(QR_DATA)) {
+                        bulkQrScanList.add(QR_DATA);
 
-                String QR_DATA = result.getText().toLowerCase().replace("[", "").replace("]", "") + "|";
-                if(!bulkQrScanList.contains(QR_DATA)) {
-                    bulkQrScanList.add(QR_DATA);
+                        // Add no. of scanned qr in button text.
+                        Button btnProceed = findViewById(R.id.proceed);
+                        btnProceed.setText(String.format(getString(R.string.btn_proceed_scan), bulkQrScanList.size()));
 
-                    // Add no. of scanned qr in button text.
-                    Button btnProceed = findViewById(R.id.proceed);
-                    btnProceed.setText(String.format(getString(R.string.btn_proceed_scan), bulkQrScanList.size()));
-
-                    Alerter.create(this)
+                        Alerter.create(this)
                                 .setTitle("QR Scanner")
                                 .setText("QR Successfully Scanned")
                                 .enableSwipeToDismiss()
                                 .show();
-                } else {
-                    Toast.makeText(this, "QR ALREADY SCANNED", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "QR ALREADY SCANNED", Toast.LENGTH_SHORT).show();
+                    }
+                    mCodeScanner.startPreview();
                 }
-                mCodeScanner.startPreview();
+
+
             } else {
                 int REFERENCE_INDEX = 0;
                 int OFFICE_INDEX = 2;
