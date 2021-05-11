@@ -40,8 +40,6 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         scannerViewLayout = findViewById(R.id.scannerViewLayout);
 
-
-
         mCodeScanner = new CodeScanner(this, scannerView);
 
 
@@ -108,6 +106,7 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
                     Toast toast = Toast.makeText(ScanQRActivity.this, "Please re-scan the QR", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
+                    mCodeScanner.startPreview();
                 } else {
                     String QR_DATA = result.getText().toLowerCase().replace("[", "").replace("]", "") + "|";
                     if(!bulkQrScanList.contains(QR_DATA)) {
@@ -145,19 +144,6 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
         return text.length() >= 9;
     }
 
-
-    private String getParticularsData(String[] data) {
-        StringBuilder particulars = new StringBuilder();
-
-        for(String d: data) {
-            if(d.split("\\|").length <= 6) {
-                particulars.append(d);
-            }
-        }
-
-        return particulars.toString();
-    }
-
     private String getDocumentInformation(String[] data) {
         String documentData = "";
         for(String d : data) {
@@ -168,11 +154,6 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
         }
         return documentData;
     }
-
-
-
-
-
 
     @Override
     protected void onResume() {

@@ -1,51 +1,35 @@
 package www.seotoolzz.com.dts;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.slidingpanelayout.widget.SlidingPaneLayout;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.tapadoo.alerter.Alerter;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import www.seotoolzz.com.dts.API.ContractModels.UserLoginResponse;
-import www.seotoolzz.com.dts.API.Contracts.IDocument;
-import www.seotoolzz.com.dts.API.Contracts.User;
-import www.seotoolzz.com.dts.API.RetrofitService;
-import www.seotoolzz.com.dts.Adapters.DocumentAdapter;
-import www.seotoolzz.com.dts.Adapters.ParticularAdapter;
-import www.seotoolzz.com.dts.Database.DB;
-import www.seotoolzz.com.dts.Database.Models.Document;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import www.seotoolzz.com.dts.API.ContractModels.UserLoginResponse;
+import www.seotoolzz.com.dts.API.Contracts.IDocument;
+import www.seotoolzz.com.dts.API.RetrofitService;
+import www.seotoolzz.com.dts.Database.DB;
+import www.seotoolzz.com.dts.Database.Models.Document;
 import www.seotoolzz.com.dts.Helpers.SharedPref;
 
 public class DocumentViewActivity extends AppCompatActivity {
@@ -104,8 +88,6 @@ public class DocumentViewActivity extends AppCompatActivity {
         } catch (URISyntaxException e) {}
     }
 
-    ParticularAdapter particularAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +112,8 @@ public class DocumentViewActivity extends AppCompatActivity {
         String[] data = QR_DATA.split("<>");
 
         String documentData = this.getDocumentInformation(data);
-        String particularsData = this.getParticularsData(data);
+        String particularsData = this.getParticularsData(data).replaceAll("\\|\\|", "|");
+        Log.d("SAMPLE_DATA", particularsData);
         String[] splintedDocumentData = documentData.split("\\|");
 
         referenceNo.setText(splintedDocumentData[QR_DATA_REFERENCE_NO]);
