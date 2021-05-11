@@ -9,7 +9,7 @@ import www.seotoolzz.com.dts.API.ContractModels.UserLoginResponse;
 public interface IDocument {
 
     @FormUrlEncoded
-    @POST("/dts_admin_d70c9453e1f41d4624f2937b05819317/c79bdf421714f5087fc34b7c538b6807/transaction/added_btn_data.php")
+    @POST("/dts_admin_d70c9453e1f41d4624f2937b05819317/c79bdf421714f5087fc34b7c538b6807/transaction/added_btn_data_2.php")
     Call<UserLoginResponse> sendDocument(@Field("data_reference_no") String data_reference_no,
                                          @Field("data_pr_date") String data_pr_date,
                                          @Field("data_office") String data_office,

@@ -202,7 +202,9 @@ public class DocumentViewActivity extends AppCompatActivity {
 
             documentResponseCall.enqueue(new Callback<UserLoginResponse>() {
                 @Override
-                public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {}
+                public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
+
+                }
 
                 @Override
                 public void onFailure(Call<UserLoginResponse> call, Throwable t) {}
@@ -234,6 +236,8 @@ public class DocumentViewActivity extends AppCompatActivity {
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                         finish();
+                    } else {
+                        Toast.makeText(DocumentViewActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -254,7 +258,7 @@ public class DocumentViewActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<UserLoginResponse> call, Throwable t) {
-
+             
                 }
             });
 
@@ -312,8 +316,6 @@ public class DocumentViewActivity extends AppCompatActivity {
             if (status.equals("true")) {
                 Toast.makeText(this, "Successfully send the document.", Toast.LENGTH_SHORT).show();
                 finish();
-            } else {
-                Toast.makeText(this, "Something went wrong, please contact the developer of this app.", Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             return;
