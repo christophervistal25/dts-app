@@ -2,29 +2,29 @@ package www.seotoolzz.com.dts.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import www.seotoolzz.com.dts.R;
 
-public class UserSettingFragment extends Fragment {
+public class WalkThroughFragment extends Fragment {
 
     public static final String ARG_PAGE = "ARG_PAGE";
     public int mPageNo;
 
-    public UserSettingFragment() {
+    public WalkThroughFragment() {
     }
 
-    public static UserSettingFragment newInstance(int pageNo) {
+    public static WalkThroughFragment newInstance(int pageNo) {
 
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNo);
-        UserSettingFragment fragment = new UserSettingFragment();
+        WalkThroughFragment fragment = new WalkThroughFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,7 +39,7 @@ public class UserSettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_setting, container, false);
+        return inflater.inflate(R.layout.fragment_walk_through, container, false);
     }
 
     @Override

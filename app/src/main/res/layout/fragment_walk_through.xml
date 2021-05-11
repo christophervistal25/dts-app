@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DocumentViewActivity">
+
+
+    <LinearLayout
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/titleHelper"
+            android:textSize="22sp"
+            android:textColor="@color/darkColor"
+            android:text="@string/how_to_use_this_app"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:background="#F2F3F4"
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+
+        <!--    FIRST -->
+        <ImageView
+            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+            android:src="@drawable/first_image_tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:text="1. For scanning document QR code."
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:text="2. For viewing all scanned documents."
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:text="3. Configurations for sending document from this application to PGSO system."
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+            <!-- END OF FIRST -->
+
+
+
+        <View
+            android:background="#F2F3F4"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+        <!--    SECOND -->
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/second_image_tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:text="4. Change the http://192.168.1.10:8000/ to whatever the ip of PGSO office system."
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:text="5. Press the button to saved"
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!-- END OF SECOND -->
+
+
+        <View
+            android:background="#F2F3F4"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+        <!--    THIRD -->
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/third_image_tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:text="6. Press this button if the document is not for claim."
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:text="7. Press this button for claim documents"
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!-- END OF THIRD -->
+
+
+        <View
+            android:background="#F2F3F4"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+        <!--    FOURTH -->
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/fourth_image_tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:text="8. Message after you scanned the document qr."
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:text="9. Point the document qr to rectangle with 4 white corners to scanned"
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!-- END OF FOURTH -->
+
+
+        <View
+            android:background="#F2F3F4"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+        <!--    FIFTH -->
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/fifth_image_tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:text="10. Proceed to view all the document information by pressing this button."
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!-- END OF FIFTH -->
+
+
+        <View
+            android:background="#F2F3F4"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+        <!--    SIXTH -->
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/sixth_image_tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:text="11. After you press the Proceed button this will show up listing all the details of document you’ve scanned please double check all information listed"
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!-- END OF SIXTH -->
+
+
+        <View
+            android:background="#F2F3F4"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+        <!--    SEVENTH -->
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/seventh_image_tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:text="12. Press this text to view all the particulars of current scanned document."
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:text="13. By pressing this button the document you've scanned will automatically send to PGSO DTS System.\n If something went wrong please read the configuration setup."
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!-- END OF SEVENTH -->
+
+
+        <View
+            android:background="#F2F3F4"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+        <!--    EIGHT -->
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/eigth_image_tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:text="14. List of all particulars after you press the (View Particulars Text)"
+            android:textColor="@color/darkColor"
+            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!-- END OF EIGHT -->
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</ScrollView>

@@ -16,4 +16,5 @@
     <string name="enter_your_password">••••••••••</string>
     <string name="login_welcome_text">Welcome</string>
     <string name="btn_proceed_scan">PROCEED WITH %d QR SCANNED</string>
+    <string name="how_to_use_this_app">How to use this app</string>
 </resources>

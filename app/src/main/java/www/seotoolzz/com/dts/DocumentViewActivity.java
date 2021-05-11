@@ -173,93 +173,12 @@ public class DocumentViewActivity extends AppCompatActivity {
 
             DB.getInstance(this).documentDao().create(documentObject);
         }
-//
-//        referenceNo.setText(documentData.get(transaction_no));
-//        claimant.setText(documentData.get(pr_liason));
-//        office.setText(documentData.get(pr_office));
-//        purchaseDate.setText(documentData.get(pr_date));
-//        chargeTo.setText(documentData.get(pr_charge_to));
-//        currentDepartment.setText(documentData.get(current_department));
-//
-//        JSONObject document = new JSONObject();
-//        try {
-//
-//            /* BEGIN OF DATA */
-//                document.put("dtse0dce_data_reference_no", documentData.get(transaction_no));
-//                document.put("dtse0dce_data_pr_no", "");
-//                document.put("dtse0dce_data_pr_date", documentData.get(pr_date));
-//                document.put("dtse0dce_data_office", documentData.get(pr_office));
-//                document.put("dtse0dce_data_claimant", documentData.get(pr_liason));
-//                document.put("dtse0dce_data_particulars", "NO_INPUT");
-//                document.put("dtse0dce_data_amount", documentData.get(particulars_total_amount));
-//                document.put("dtse0dce_data_purpose", documentData.get(pr_purpose));
-//                document.put("dtse0dce_data_charge_to", documentData.get(pr_charge_to));
-//                document.put("dtse0dce_data_current_department", documentData.get(pr_current_department));
-//                document.put("dtse0dce_data_current_station", documentData.get(pr_station));
-//            /* END OF DATA */
-//
-//            /* BEGIN OF HISTORY */
-//                document.put("dtsa6e7f_history_logs_user_id", documentData.get(user_id));
-//                document.put("dtsa6e7f_history_logs_datetime", documentData.get(datetime));
-//                document.put("dtsa6e7f_history_logs_office", documentData.get(pr_office));
-//                document.put("dtsa6e7f_history_logs_claimant", documentData.get(pr_liason));
-//                document.put("dtsa6e7f_history_logs_timelaps", "NONE");
-//                document.put("dtsa6e7f_history_logs_transaction", documentData.get(transaction_no));
-//                document.put("dtsa6e7f_history_logs_data_id", documentData.get(data_id));
-//                document.put("dtsa6e7f_history_logs_current_department", documentData.get(current_department));
-//                document.put("dtsa6e7f_history_logs_current_station", documentData.get(current_pr_station));
-//            /* END OF HISTORY */
-//            JSONArray particularObject = new JSONArray();
-//            JSONArray jsonArray = new JSONArray();
-//
-//            for(int i = 0; i<particularsData.size(); i++) {
-//                String[] data = particularsData.get(i).split("\\|");
-//                JSONObject particular = new JSONObject();
-//                try {
-//                    particular.put("dts_particulars_item_no", data[0]);
-//                    particular.put("dts_particulars_quantity", data[1]);
-//                    particular.put("dts_particulars_data_id", data[2]);
-//                    particular.put("dts_particulars_unit_of_issue", data[3]);
-//                    particular.put("dts_particulars_item_description", data[4]);
-//                    particular.put("dts_particulars_estimated_unit_coast", data[5]);
-//                    particular.put("dts_particulars_estimated_total_coast", data[6]);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                particularObject.put(particular);
-//
-//                Log.d("NO_OF_ITEMS", (i + 1) + " => " + particularsData.get(i).replace("]", ""));
-//            }
-//
-//            document.put("particulars", particularObject);
-//
-//            Log.d("TEST_VALE", String.valueOf(document));
 
-
-//            /* BEGIN OF PARTICULARS */
-//                document.put("dts_particulars_item_no", splittedQRData.get(item_no));
-//                document.put("dts_particulars_quantity", splittedQRData.get(quantity));
-//                document.put("dts_particulars_data_id", splittedQRData.get(particulars_data_id));
-//                document.put("dts_particulars_unit_of_issue", splittedQRData.get(unit_of_issue));
-//                document.put("dts_particulars_item_description", splittedQRData.get(description));
-//                document.put("dts_particulars_estimated_unit_coast", splittedQRData.get(estimated_unit_cost));
-//                document.put("dts_particulars_estimated_total_coast", splittedQRData.get(estimated_total_cost));
-//            /* END OF PARTICULARS */
-
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        mSocket.on("data_passed", onSuccess);
-//
-//
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(DocumentViewActivity.this);
         dialogBuilder.setTitle("Important Message");
         dialogBuilder.setMessage("Please double check all the listed information before you submit this document.");
         dialogBuilder.setCancelable(true);
 
-//        mSocket.emit("SEND_PR_DATA", "")
         dialogBuilder.setPositiveButton("I already double check", (dialog, id) -> {
 
 //            Toast.makeText(this, particularsData, Toast.LENGTH_SHORT).show();
