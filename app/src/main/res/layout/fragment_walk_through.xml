@@ -127,7 +127,7 @@
 
         <TextView
             android:layout_marginTop="5dp"
-            android:text="7. Press this button for claim documents"
+            android:text="7. Press this button for receiving documents"
             android:textColor="@color/darkColor"
             android:textSize="17sp"
             android:layout_width="match_parent"

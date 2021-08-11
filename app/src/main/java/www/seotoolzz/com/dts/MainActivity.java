@@ -1,9 +1,6 @@
 package www.seotoolzz.com.dts;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +14,15 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.List;
-
-import www.seotoolzz.com.dts.Database.DB;
-import www.seotoolzz.com.dts.Database.Models.Document;
 import www.seotoolzz.com.dts.Fragments.HomeFragment;
-import www.seotoolzz.com.dts.Fragments.ProfileFragment;
-import www.seotoolzz.com.dts.Fragments.WalkThroughFragment;
+import www.seotoolzz.com.dts.Fragments.SettingFragment;
 
 
 public class MainActivity extends AppCompatActivity
 {
+
+
+
     private TabLayout mTabLayout;
 
 
@@ -35,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     private int[] mTabsIcons = {
             R.drawable.ic_baseline_format_list_bulleted_24,
             R.drawable.ic_baseline_send_24,
-            R.drawable.ic_baseline_aspect_ratio_24,
+//            R.drawable.ic_baseline_aspect_ratio_24,
     };
 
     @Override
@@ -43,17 +38,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        List<Document> documentList = DB.getInstance(this).documentDao().get();
-
-        askPermissionForCamera();
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        ViewPager viewPager = findViewById(R.id.view_pager);
         MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         if (viewPager != null)
             viewPager.setAdapter(pagerAdapter);
 
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        mTabLayout = findViewById(R.id.tab_layout);
         if (mTabLayout != null) {
             mTabLayout.setupWithViewPager(viewPager);
 
@@ -63,8 +53,10 @@ public class MainActivity extends AppCompatActivity
                     tab.setCustomView(pagerAdapter.getTabView(i));
             }
 
-            mTabLayout.getTabAt(0).getCustomView().setSelected(true);
-        }
+        mTabLayout.getTabAt(0).getCustomView().setSelected(true);
+    }
+
+
 
         findViewById(R.id.fab).setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ScanQRActivity.class);
@@ -74,9 +66,9 @@ public class MainActivity extends AppCompatActivity
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        public final int PAGE_COUNT = 3;
+        public final int PAGE_COUNT = 2;
 
-        private final String[] mTabsTitle = {"List", "Profile", "How to use"};
+        private final String[] mTabsTitle = {"List", "Profile"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -97,10 +89,10 @@ public class MainActivity extends AppCompatActivity
                     return HomeFragment.newInstance(1);
 
                 case 1:
-                    return ProfileFragment.newInstance(2);
+                    return SettingFragment.newInstance(2);
 
-                case 2:
-                    return WalkThroughFragment.newInstance(3);
+//                case 2:
+//                    return WalkThroughFragment.newInstance(3);
             }
             return null;
         }
@@ -116,12 +108,5 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void askPermissionForCamera() {
-        // Have access for camera to run the QR Code Scanner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[] {Manifest.permission.CAMERA}, 1);
-            }
-        }
-    }
+
 }

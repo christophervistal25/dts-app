@@ -10,23 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
+            android:layout_centerInParent="true"
             android:orientation="vertical">
+
+            <TextView
+                android:text="DOCUMENT DATA"
+                android:textSize="20sp"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
+                android:layout_marginBottom="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
 
 
             <TextView
-                android:text="Reference No"
+                android:text="@string/reference_no"
                 android:textAllCaps="true"
                 android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
@@ -43,59 +48,7 @@
 
 
             <TextView
-                android:text="Purchase Request Date"
-                android:textColor="@color/darkColor"
-                android:textAllCaps="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-
-            <EditText
-                android:id="@+id/prDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:textIsSelectable="true"
-                android:focusable="false"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:text="charged to"
-                android:textAllCaps="true"
-                android:textColor="@color/darkColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <EditText
-                android:id="@+id/chargeTo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:textIsSelectable="true"
-                android:focusable="false"
-                android:layout_marginBottom="15dp"/>
-
-
-            <TextView
-                android:text="Current Department"
-                android:textAllCaps="true"
-                android:textColor="@color/darkColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <EditText
-                android:id="@+id/currentDepartment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:textIsSelectable="true"
-                android:focusable="false"
-                android:layout_marginBottom="15dp"/>
-
-
-
-            <TextView
-                android:text="Office"
+                android:text="@string/office"
                 android:textAllCaps="true"
                 android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
@@ -111,14 +64,14 @@
                 android:layout_marginBottom="15dp"/>
 
             <TextView
-                android:text="Liaison Name"
+                android:text="@string/claimant"
                 android:textAllCaps="true"
                 android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
-                android:id="@+id/liaison_name"
+                android:id="@+id/claimant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -127,15 +80,32 @@
                 android:layout_marginBottom="15dp"/>
 
             <TextView
-                android:text="amount"
+                android:text="@string/data_transaction"
                 android:textAllCaps="true"
                 android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <EditText
+                android:id="@+id/transaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textIsSelectable="true"
+                android:focusable="false"
+                android:layout_marginBottom="15dp"/>
+
+
+
+            <TextView
+                android:text="@string/current_department"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <EditText
-                android:id="@+id/amount"
+                android:id="@+id/currentDepartment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -144,24 +114,7 @@
                 android:layout_marginBottom="15dp"/>
 
             <TextView
-                android:text="purpose"
-                android:textAllCaps="true"
-                android:textColor="@color/darkColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-
-            <EditText
-                android:id="@+id/purpose"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:textIsSelectable="true"
-                android:focusable="false"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:text="current station"
+                android:text="@string/current_station"
                 android:textAllCaps="true"
                 android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
@@ -177,15 +130,22 @@
                 android:layout_marginBottom="15dp"/>
 
 
-
             <TextView
-                android:id="@+id/viewParticulars"
-                android:text="View Particulars"
-                android:textSize="17sp"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/charged_to"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/chargeTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textIsSelectable="true"
+                android:focusable="false"
+                android:layout_marginBottom="15dp"/>
+
 
 
             <Button
@@ -204,7 +164,6 @@
         </LinearLayout>
 
 
-    </LinearLayout>
 
     </RelativeLayout>
 

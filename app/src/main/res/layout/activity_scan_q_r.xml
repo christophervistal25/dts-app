@@ -54,7 +54,7 @@
 
         <Button
             android:id="@+id/btnForClaim"
-            android:text="FOR CLAIM DOCUMENT"
+            android:text="FOR RECEIVING DOCUMENT"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -74,20 +74,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <Button
-            android:id="@+id/proceed"
-            android:text="PROCEED WITH 0 QR SCANNED"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="#FFFFFF"
-            android:letterSpacing="0.1"
-            android:textSize="15.5sp"
-            android:background="@drawable/btn_blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
         <com.budiyev.android.codescanner.CodeScannerView
             android:id="@+id/scanner_view"

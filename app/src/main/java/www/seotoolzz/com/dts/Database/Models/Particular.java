@@ -7,6 +7,8 @@ public class Particular {
 
     public String name;
 
+    public String quantity;
+
     public String unit;
 
     public String description;
@@ -69,5 +71,13 @@ public class Particular {
 
     public void setItem_id(String item_id) {
         this.item_id = item_id;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }

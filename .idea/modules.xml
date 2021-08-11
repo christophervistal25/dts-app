@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dts-app.iml" filepath="$PROJECT_DIR$/.idea/modules/dts-app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/dts-app.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/dts-app.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dts-app-accounting.iml" filepath="$PROJECT_DIR$/.idea/modules/dts-app-accounting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/dts-app-accounting.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/dts-app-accounting.app.iml" />
     </modules>
   </component>
 </project>

@@ -18,6 +18,8 @@ public class ParticularsActivity extends AppCompatActivity  implements Particula
 
     ParticularAdapter adapter;
     List<Particular> particularList;
+    List<String> itemList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +30,23 @@ public class ParticularsActivity extends AppCompatActivity  implements Particula
         rvParticulars.setLayoutManager(new LinearLayoutManager(this));
 
         String particulars = getIntent().getStringExtra("PARTICULARS");
-
+        itemList = new ArrayList<>();
         particularList = new ArrayList<>();
 
         for(String data : particulars.split("\\|")) {
             String[] splintedData = data.split(",");
-            if(splintedData.length != 0) {
+            if(splintedData.length != 0 && !itemList.contains(splintedData[1])) {
                 Particular particular = new Particular();
+
                 particular.setId(splintedData[0]);
                 particular.setItem_id(splintedData[1]);
-                particular.setName(splintedData[2]);
+                particular.setQuantity(splintedData[2]);
                 particular.setUnit(splintedData[3]);
                 particular.setDescription(splintedData[4]);
                 particular.setEstimated_cost(splintedData[5]);
                 particular.setCost(splintedData[6]);
+
+                itemList.add(splintedData[1]);
 
                 particularList.add(particular);
             }

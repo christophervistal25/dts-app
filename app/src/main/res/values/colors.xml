@@ -9,4 +9,5 @@
     <color name="colorLightGray">#a6abae</color>
     <color name="colorBackroundWhite">#f0f2ea</color>
     <color name="colorGray">#495C67</color>
+    <color name="colorDanger">#E91E63</color>
 </resources>

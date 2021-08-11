@@ -3,17 +3,15 @@ package www.seotoolzz.com.dts.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -23,7 +21,6 @@ import www.seotoolzz.com.dts.Database.Models.Document;
 import www.seotoolzz.com.dts.Database.Models.DocumentRaw;
 import www.seotoolzz.com.dts.DocumentViewActivity;
 import www.seotoolzz.com.dts.R;
-import www.seotoolzz.com.dts.ScanQRActivity;
 
 
 public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClickListener  {
@@ -118,9 +115,8 @@ public class HomeFragment extends Fragment  implements DocumentAdapter.ItemClick
     public void onItemClick(View view, int position) {
         Document document = adapter.getItem(position);
         Intent intent = new Intent(getActivity(), DocumentViewActivity.class);
-        DocumentRaw documentRaw = DB.getInstance(getContext()).documentRawDao().find(document.getUnique_id());
+        DocumentRaw documentRaw = DB.getInstance(getContext()).documentRawDao().findByReferenceNo(document.getReference_no());
         intent.putExtra("QR_DATA", documentRaw.getData());
-        intent.putExtra("TYPE", "VIEW");
         startActivity(intent);
     }
 }

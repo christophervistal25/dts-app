@@ -1,5 +1,5 @@
 <resources>
-    <string name="base_url">http://192.168.1.10:8000/</string>
+    <string name="base_url">http://192.168.1.11:8002/</string>
     <string name="app_name">Document Tracking</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -17,4 +17,15 @@
     <string name="login_welcome_text">Welcome</string>
     <string name="btn_proceed_scan">PROCEED WITH %d QR SCANNED</string>
     <string name="how_to_use_this_app">How to use this app</string>
+    <string name="REFERENCE_NO_PATTERN">\\d+-\\d+-\\d+-\\d+</string>
+    <string name="DOCUMENT_SEPARATOR">\\|</string>
+    <string name="proceed_text">PROCEED WITH 0 QR SCANNED</string>
+    <string name="reference_no">Reference No</string>
+    <string name="office">Office</string>
+    <string name="claimant">CLAIMANT</string>
+    <string name="data_transaction">DATA TRANSACTION</string>
+    <string name="current_department">Current Department</string>
+    <string name="current_station">current station</string>
+    <string name="charged_to">charged to</string>
+    <string name="base_url_for_receive">/dts_admin_d70c9453e1f41d4624f2937b05819317/qrcodepage/</string>
 </resources>
