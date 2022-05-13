@@ -9,7 +9,7 @@ import www.seotoolzz.com.dts.API.ContractModels.DocumentSendResponse;
 public interface IDocument {
 
     @FormUrlEncoded
-    @POST("/dts_admin_d70c9453e1f41d4624f2937b05819317/c79bdf421714f5087fc34b7c538b6807/transaction/added_btn_data.php")
+    @POST("dts_admin_d70c9453e1f41d4624f2937b05819317/c79bdf421714f5087fc34b7c538b6807/transaction/added_btn_data")
     Call<DocumentSendResponse> sendDocument(@Field("data_reference_no") String data_reference_no,
                                             @Field("data_office") String data_office,
                                             @Field("data_transaction") String data_transaction,
@@ -22,7 +22,7 @@ public interface IDocument {
     );
 
     @FormUrlEncoded
-    @POST("/dts_admin_d70c9453e1f41d4624f2937b05819317/c79bdf421714f5087fc34b7c538b6807/transaction/added_btn_history_logs.php")
+    @POST("dts_admin_d70c9453e1f41d4624f2937b05819317/c79bdf421714f5087fc34b7c538b6807/transaction/added_btn_history_logs")
     Call<DocumentSendResponse> sendHistoryOfDocument(@Field("history_logs_current_department") String history_logs_current_department,
                                          @Field("data_reference_no") String data_reference_no,
                                          @Field("history_logs_office") String history_logs_office,

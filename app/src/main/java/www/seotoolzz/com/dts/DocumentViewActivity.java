@@ -2,6 +2,7 @@ package www.seotoolzz.com.dts;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class DocumentViewActivity extends AppCompatActivity {
 
         String splintedDocumentData[] = getIntent().getStringExtra("QR_DATA").split(documetHelper.SEPERATOR_PATTERN);
 
-        if(DB.getInstance(this).documentDao().find(splintedDocumentData[DocumentHelper.REFERENCE_NO_INDEX]) == null) {
+        if (DB.getInstance(this).documentDao().find(splintedDocumentData[DocumentHelper.REFERENCE_NO_INDEX]) == null) {
             DocumentRaw documentRaw = new DocumentRaw();
             documentRaw.setReference_no(splintedDocumentData[DocumentHelper.REFERENCE_NO_INDEX]);
             documentRaw.setData(getIntent().getStringExtra("QR_DATA"));
@@ -67,17 +68,19 @@ public class DocumentViewActivity extends AppCompatActivity {
         chargeTo.setText(SharedPref.getSharedPreferenceString(getApplicationContext(), "SELECTED_OFFICE", ""));
         currentDepartment.setText(splintedDocumentData[DocumentHelper.OFFICE_INDEX].toUpperCase());
         currentStation.setText(splintedDocumentData[DocumentHelper.CURRENT_STATION_INDEX].toUpperCase());
-        
+
         findViewById(R.id.btnSend).setOnClickListener(v -> sendDataOfDocument(splintedDocumentData));
     }
 
-    public void sendDataOfDocument(String[] splintedDocumentData)
-    {
+    public void sendDataOfDocument(String[] splintedDocumentData) {
+        String url = SharedPref.getSharedPreferenceString(getApplicationContext(), "BASE_URL", getString(R.string.base_url)) + "dts_admin_d70c9453e1f41d4624f2937b05819317/c79bdf421714f5087fc34b7c538b6807/transaction/added_btn_data";
+        Log.d("SAMPLE_DATA", url);
+
         ProgressDialog progressDialog = new ProgressDialog(DocumentViewActivity.this);
         progressDialog.setMessage("This may take a few seconds...");
         progressDialog.show();
         Retrofit retrofit = RetrofitService
-                                    .RetrofitInstance(SharedPref.getSharedPreferenceString(getApplicationContext(), "BASE_URL", getString(R.string.base_url)));
+                .RetrofitInstance(SharedPref.getSharedPreferenceString(getApplicationContext(), "BASE_URL", getString(R.string.base_url)));
 
         IDocument documentService = retrofit.create(IDocument.class);
 
@@ -97,9 +100,7 @@ public class DocumentViewActivity extends AppCompatActivity {
         call.enqueue(new Callback<DocumentSendResponse>() {
             @Override
             public void onResponse(Call<DocumentSendResponse> call, Response<DocumentSendResponse> response) {
-                if(response.code() == 200) {
-                    sendHistoryCallback(splintedDocumentData, progressDialog);
-                }
+                sendHistoryCallback(splintedDocumentData, progressDialog);
             }
 
             @Override
@@ -115,7 +116,7 @@ public class DocumentViewActivity extends AppCompatActivity {
 
         IDocument service = r.create(IDocument.class);
 
-        Call<DocumentSendResponse> call =  service.sendHistoryOfDocument(
+        Call<DocumentSendResponse> call = service.sendHistoryOfDocument(
                 splintedDocumentData[DocumentHelper.CURRENT_DEPARTMENT_INDEX],
                 splintedDocumentData[DocumentHelper.REFERENCE_NO_INDEX],
                 splintedDocumentData[DocumentHelper.OFFICE_INDEX],
@@ -127,40 +128,42 @@ public class DocumentViewActivity extends AppCompatActivity {
         );
 
         call.enqueue(new Callback<DocumentSendResponse>() {
-             @Override
-             public void onResponse(Call<DocumentSendResponse> call, Response<DocumentSendResponse> response) {
-                 progressDialog.dismiss();
+            @Override
+            public void onResponse(Call<DocumentSendResponse> call, Response<DocumentSendResponse> response) {
+                progressDialog.dismiss();
 
-                 if(response.code() == 200) {
+
 
                     /* UPDATE THE CURRENT DOCUMENT TO SENT. */
-                     Document document = DB.getInstance(getApplicationContext()).documentDao().find(splintedDocumentData[DocumentHelper.REFERENCE_NO_INDEX]);
-                     document.setStatus("SENT");
-                     DB.getInstance(getApplicationContext()).documentDao().update(document);
+                    Document document = DB.getInstance(getApplicationContext()).documentDao().find(splintedDocumentData[DocumentHelper.REFERENCE_NO_INDEX]);
+                    document.setStatus("SENT");
+                    DB.getInstance(getApplicationContext()).documentDao().update(document);
 
 
-                     Alerter.create(DocumentViewActivity.this)
-                             .setTitle("Message")
-                             .setBackgroundColorRes(R.color.colorPrimary)
-                             .setText("Document data successfully send")
-                             .enableSwipeToDismiss()
-                             .show();
-                 } else {
-                     Alerter.create(DocumentViewActivity.this)
-                             .setTitle("Message")
-                             .setBackgroundColorRes(R.color.colorDanger)
-                             .setText("Something went wrong please contact the developer")
-                             .enableSwipeToDismiss()
-                             .show();
-                 }
+                    Alerter.create(DocumentViewActivity.this)
+                            .setTitle("Message")
+                            .setBackgroundColorRes(R.color.colorPrimary)
+                            .setText("Document data successfully send")
+                            .enableSwipeToDismiss()
+                            .show();
+                }
 
-             }
+//                else {
+//                Alerter.create(DocumentViewActivity.this)
+//                        .setTitle("Message")
+//                        .setBackgroundColorRes(R.color.colorDanger)
+//                        .setText("Something went wrong please contact the developer")
+//                        .enableSwipeToDismiss()
+//                        .show();
+//            }
 
-             @Override
-             public void onFailure(Call<DocumentSendResponse> call, Throwable t) {
-                 progressDialog.dismiss();
-                 Toast.makeText(DocumentViewActivity.this, "Opps! Please contact the developer there's a problem", Toast.LENGTH_SHORT).show();
-             }
+            }
+
+            @Override
+            public void onFailure(Call<DocumentSendResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(DocumentViewActivity.this, "Opps! Please contact the developer there's a problem", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

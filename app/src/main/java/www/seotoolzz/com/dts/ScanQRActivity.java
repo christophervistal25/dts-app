@@ -106,7 +106,7 @@ public class ScanQRActivity extends AppCompatActivity implements IQRScanner {
         startActivity(browserIntent);
     }
 
-    @Override
+@Override
     protected void onResume() {
         super.onResume();
         documentsReferenceNo = new ArrayList<>();
