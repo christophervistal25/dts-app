@@ -146,7 +146,7 @@ public class DocumentViewActivity extends AppCompatActivity {
                             .setText("Document data successfully send")
                             .enableSwipeToDismiss()
                             .show();
-                }
+//                }
 
 //                else {
 //                Alerter.create(DocumentViewActivity.this)
